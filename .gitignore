@@ -1,0 +1,9 @@
+# secrets stay local - NEVER commit your .env
+.env
+
+# python noise
+__pycache__/
+
+# local scratch if anyone runs seed.py directly inside this clone
+workspace/
+scratch/
