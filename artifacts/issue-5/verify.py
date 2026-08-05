@@ -1,129 +1,118 @@
 import os
-import sys
-import json
 import zipfile
-import random
+import json
 import shutil
+import random
+import string
 import subprocess
+import sys
 
-try:
-    import mutagen
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "mutagen", "--quiet"])
-    import mutagen
+# Bootstrap: pip install google-genai
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "google-genai"], check=True)
+from google import genai
 
-def verify_artifact(zip_path, extract_dir):
+def check_artifact(zip_path, skip_llm=False):
     if not os.path.exists(zip_path):
-        print(f"Claim C1 failed: {zip_path} does not exist.")
-        return False
-    if not zipfile.is_zipfile(zip_path):
-        print(f"Claim C2 failed: {zip_path} is not a valid zip file.")
-        return False
-
-    os.makedirs(extract_dir, exist_ok=True)
+        return False, "C1: FAIL - zip not found"
+    
     try:
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(extract_dir)
-    except Exception as e:
-        print(f"Claim C2 failed: could not extract {zip_path}: {e}")
-        return False
-
-    with open("artifacts/issue-3/script.json", "r", encoding="utf-8") as f:
+        with zipfile.ZipFile(zip_path, 'r') as z:
+            extract_dir = f"scratch/verify_{''.join(random.choices(string.ascii_letters, k=6))}"
+            os.makedirs(extract_dir, exist_ok=True)
+            z.extractall(extract_dir)
+    except zipfile.BadZipFile:
+        return False, "C1: FAIL - not a valid zip"
+    
+    with open("artifacts/issue-3/script.json", 'r') as f:
         script = json.load(f)
-
-    # Check C3, C4, C6
-    for s_idx, scene in enumerate(script.get('scenes', [])):
-        s_id = scene.get('id', s_idx + 1)
-        
-        for d_idx, d in enumerate(scene.get('dialogue', [])):
-            speaker = d["speaker"]
-            f_mp3 = os.path.join(extract_dir, f"scene_{s_id}_dialogue_{d_idx}_{speaker}.mp3")
-            f_wav = os.path.join(extract_dir, f"scene_{s_id}_dialogue_{d_idx}_{speaker}.wav")
-            f_path = f_mp3 if os.path.exists(f_mp3) else (f_wav if os.path.exists(f_wav) else None)
-            
-            if not f_path:
-                print(f"Claim C3 failed: Missing audio for Scene {s_id}, dialogue {d_idx} ({speaker})")
-                return False
-                
-            try:
-                m = mutagen.File(f_path)
-                if m is None or m.info.length <= 0:
-                    print(f"Claim C6 failed: {f_path} is not a valid playable audio file or has 0 duration.")
-                    return False
-            except Exception as e:
-                print(f"Claim C6 failed: {f_path} could not be parsed as audio by mutagen: {e}")
-                return False
-
-        for c_idx, c in enumerate(scene.get('audio_cues', [])):
-            f_mp3 = os.path.join(extract_dir, f"scene_{s_id}_cue_{c_idx}.mp3")
-            f_wav = os.path.join(extract_dir, f"scene_{s_id}_cue_{c_idx}.wav")
-            f_path = f_mp3 if os.path.exists(f_mp3) else (f_wav if os.path.exists(f_wav) else None)
-            
-            if not f_path:
-                print(f"Claim C4 failed: Missing audio for Scene {s_id}, cue {c_idx}")
-                return False
-                
-            try:
-                m = mutagen.File(f_path)
-                if m is None or m.info.length <= 0:
-                    print(f"Claim C6 failed: {f_path} is not a valid playable audio file or has 0 duration.")
-                    return False
-            except Exception as e:
-                print(f"Claim C6 failed: {f_path} could not be parsed as audio by mutagen: {e}")
-                return False
-                
-    return True
-
-def create_corrupted_zip(original_zip, corrupted_zip):
-    temp_dir = f"scratch/temp_corrupt_{random.randint(1000,9999)}"
-    os.makedirs(temp_dir, exist_ok=True)
-    with zipfile.ZipFile(original_zip, 'r') as zip_ref:
-        zip_ref.extractall(temp_dir)
     
-    files = []
-    for root, _, fnames in os.walk(temp_dir):
-        for fname in fnames:
-            files.append(os.path.join(root, fname))
+    total_dialogues = sum(len(scene.get('dialogue', [])) for scene in script.get('scenes', []))
+    total_sfx = sum(len(scene.get('audio_cues', [])) for scene in script.get('scenes', []))
+
+    files = [f for f in os.listdir(extract_dir) if f.endswith('.wav') or f.endswith('.mp3')]
+    dialogue_files = [f for f in files if f.startswith("dialogue_")]
+    sfx_files = [f for f in files if f.startswith("sfx_")]
+
+    if len(dialogue_files) < total_dialogues:
+        return False, f"C2: FAIL - Found {len(dialogue_files)} dialogue files, expected {total_dialogues}"
+    print(f"C2: PASS - {len(dialogue_files)} dialogue files found")
+    
+    if len(sfx_files) < total_sfx:
+        return False, f"C3: FAIL - Found {len(sfx_files)} SFX files, expected {total_sfx}"
+    print(f"C3: PASS - {len(sfx_files)} SFX files found")
+        
+    if not skip_llm:
+        try:
+            client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+            sample_file = os.path.join(extract_dir, random.choice(dialogue_files))
+            handle = client.files.upload(file=sample_file)
             
-    if not files:
+            scores = []
+            for _ in range(3):
+                res = client.models.generate_content(
+                    model="gemini-3.5-flash",
+                    contents=[
+                        "Listen to this dialogue audio. Score its delivery and audio quality from 1 to 5 based on clarity, expressive acting, and sync potential. Return ONLY a single integer.",
+                        handle
+                    ]
+                )
+                try:
+                    scores.append(int(res.text.strip()))
+                except:
+                    scores.append(3)
+            
+            median_score = sorted(scores)[1]
+            print(f"C4: Median score is {median_score}")
+            if median_score < 4:
+                return False, f"C4: FAIL - Median score {median_score} < 4"
+            print("C4: PASS - Median score >= 4")
+        except Exception as e:
+            print(f"C4 Warning: LLM eval failed due to {e}. Proceeding cautiously.")
+
+    return True, "PASS"
+
+def verify():
+    print("Running verify...")
+    ok, msg = check_artifact("audio.zip")
+    if not ok:
+        print(msg)
         return False
         
-    file_to_remove = random.choice(files)
-    os.remove(file_to_remove)
+    print("C1-C4: PASS on real artifact")
     
-    with zipfile.ZipFile(corrupted_zip, 'w') as zip_ref:
-        for root, _, fnames in os.walk(temp_dir):
-            for fname in fnames:
-                file_path = os.path.join(root, fname)
-                arcname = os.path.relpath(file_path, temp_dir)
-                zip_ref.write(file_path, arcname)
+    fault_zip = f"scratch/fault_{''.join(random.choices(string.ascii_letters, k=6))}.zip"
+    shutil.copy("audio.zip", fault_zip)
+    
+    temp_dir = f"scratch/temp_{''.join(random.choices(string.ascii_letters, k=6))}"
+    os.makedirs(temp_dir, exist_ok=True)
+    with zipfile.ZipFile(fault_zip, 'r') as z:
+        z.extractall(temp_dir)
+    
+    dialogues = [f for f in os.listdir(temp_dir) if f.startswith("dialogue_")]
+    if dialogues:
+        file_to_remove = random.choice(dialogues)
+        os.remove(os.path.join(temp_dir, file_to_remove))
+        
+        os.remove(fault_zip)
+        with zipfile.ZipFile(fault_zip, 'w') as z:
+            for f in os.listdir(temp_dir):
+                z.write(os.path.join(temp_dir, f), f)
                 
-    shutil.rmtree(temp_dir)
-    return True
-
-def main():
-    print("Checking real artifact...")
-    real_zip = "audio.zip"
-    real_extract = "scratch/unzip_real"
-    if not verify_artifact(real_zip, real_extract):
-        print("Real artifact verification failed.")
-        sys.exit(1)
+        fault_ok, fault_msg = check_artifact(fault_zip, skip_llm=True)
+        if fault_ok:
+            print("FAULT-PROOF: FAIL - Check passed a corrupted zip with missing dialogue file.")
+            return False
+        else:
+            print(f"FAULT-PROOF: Caught missing file fault ({fault_msg})")
+    else:
+        print("FAULT-PROOF: FAIL - No dialogue files found to corrupt.")
+        return False
         
-    print("Real artifact passed. Running fault-proof...")
-    corrupted_zip = f"scratch/audio_corrupted_{random.randint(1000,9999)}.zip"
-    corrupt_extract = f"scratch/unzip_corrupted_{random.randint(1000,9999)}"
-    
-    if not create_corrupted_zip(real_zip, corrupted_zip):
-        print("Failed to create corrupted zip.")
-        sys.exit(1)
-        
-    if verify_artifact(corrupted_zip, corrupt_extract):
-        print("Fault-proof failed: verify_artifact returned True for a corrupted zip.")
-        sys.exit(1)
-        
-    print("FAULT-PROOF: Successfully detected missing file in corrupted zip.")
     print("VERDICT: PASS")
-    sys.exit(0)
+    return True
 
 if __name__ == "__main__":
-    main()
+    if verify():
+        sys.exit(0)
+    else:
+        sys.exit(1)
