@@ -1,0 +1,7 @@
+Write Script and Storyboard JSON
+
+SHARED SPEC: Create an original ~2 minute animated comedy short as a single MP4 file, final.mp4 (1280x720, with audio: character voices and music/SFX). Build it around one original funny joke or comedic premise in the irreverent, satirical adult-animation style aimed at the same audience as Family Guy or South Park: punchy dialogue, fast pacing, cutaway gags. You have full creative control over the joke, characters, art style and animation technique - simple South-Park-style cutout animation is fine. Hard requirements: a real watchable video close to 120 seconds, synced dialogue audio, a hook in the first 5 seconds, no dead air, and a punchline payoff at the end. TASK: Read spec.md. Write a structured script for the ~120-second short that strictly adheres to the rubric. Include exact timestamps (in seconds), character names, dialogue text, visual scene descriptions (including cutaways), and audio cues (SFX/music). Ensure there is a hook in the first 5 seconds and a massive punchline at the end. Format this as a strict JSON file so automated systems can parse the timeline. Save it as script.json. HOW IT WILL BE JUDGED: The file script.json must exist, be valid JSON, contain a timeline of scenes summing to ~120 seconds, and pass a human/LLM evaluation against the spec.md rubric, scoring at least 4/5 on 'Joke Density', 'Hook Effectiveness', and 'Punchline Payoff'.
+
+Save the main deliverable as script.json.
+
+Already provided in your working directory: artifacts/issue-2/spec.md
