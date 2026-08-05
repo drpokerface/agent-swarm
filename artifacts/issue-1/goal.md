@@ -1,0 +1,5 @@
+RESEARCH: Comedy Animation Specification
+
+SHARED SPEC: The project is an original ~2 min animated comedy short (MP4, 1280x720). Style: Irreverent, satirical adult-animation (Family Guy, South Park style: punchy dialogue, fast pacing, cutaways). Target length ~120s. Must have synced dialogue, hook in first 5s, no dead air, punchline payoff. Task: Study successful examples of fast-paced satirical adult-animation (e.g., South Park, Family Guy) through internet research. Identify the measurable properties that make them funny, engaging, and well-paced. Create a markdown file named 'spec.md'. It must include these properties and a detailed scoring rubric with 1-5 anchored descriptors for four categories: 1. Script Humor & Pacing, 2. Audio Punchiness & Delivery, 3. Visual Cohesion (Cutout Style), and 4. Overall Editing & Timing. JUDGING: Deliverable is successfully validated if 'spec.md' exists, contains the exact 4 scoring categories, and has distinct descriptions for scores 1 through 5 in each category.
+
+Save the main deliverable as spec.md.
