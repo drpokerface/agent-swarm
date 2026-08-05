@@ -1,0 +1,7 @@
+Generate Visual Assets
+
+SHARED SPEC: Create an original ~2 minute animated comedy short as a single MP4 file, final.mp4 (1280x720, with audio: character voices and music/SFX). Build it around one original funny joke or comedic premise in the irreverent, satirical adult-animation style aimed at the same audience as Family Guy or South Park: punchy dialogue, fast pacing, cutaway gags. You have full creative control over the joke, characters, art style and animation technique - simple South-Park-style cutout animation is fine. Hard requirements: a real watchable video close to 120 seconds, synced dialogue audio, a hook in the first 5 seconds, no dead air, and a punchline payoff at the end. TASK: Read spec.md and script.json. Generate all visual assets needed for the script. Write a Python script using PIL or an image generation API to create 1280x720 backgrounds for each scene and simple 2D cutout character sprites (including multiple mouth shapes for lip-syncing and expressions). Ensure the style matches the irreverent tone described in spec.md. Package all generated PNG files (characters with transparent backgrounds, scene backgrounds) into a single archive named visuals.zip. HOW IT WILL BE JUDGED: The file visuals.zip must exist, contain valid PNG image files representing the scenes and characters defined in script.json, and score at least 4/5 on the visual style dimension from spec.md.
+
+Save the main deliverable as visuals.zip.
+
+Already provided in your working directory: artifacts/issue-2/spec.md, artifacts/issue-3/script.json

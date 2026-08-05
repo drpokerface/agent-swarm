@@ -1,0 +1,290 @@
+{
+  "title": "Customer Service in Hell",
+  "characters": [
+    {
+      "name": "DAVE",
+      "description": "A regular guy trying to cancel his cable subscription. Wears a tired expression and sweatpants."
+    },
+    {
+      "name": "ZALGOR",
+      "description": "A demonic entity working as a Tier 1 Support Rep for Comcast/Hell. Wears a headset over his horns."
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "end_time": 40.0,
+      "visuals": "Split screen. Left side: Dave is on his couch in a messy apartment. Right side: Zalgor is in a drab cubicle surrounded by actual hellfire and tormented souls.",
+      "audio_cues": [
+        "SFX: Phone ringing",
+        "SFX: Fiery crackling background noise",
+        "Music: Elevator muzak playing faintly in Hell"
+      ],
+      "dialogue": [
+        {
+          "speaker": "DAVE",
+          "text": "Yes, I just want to cancel my cable.",
+          "timestamp": 1.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "I can help with that. But first, let me offer you our premium damnation package. It comes with HBO.",
+          "timestamp": 3.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "I literally only watch YouTube shorts of guys building mud huts. Cancel it.",
+          "timestamp": 7.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "To verify your identity, please recite the screams of your ancestors.",
+          "timestamp": 11.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Uh... 'Ahhh?'",
+          "timestamp": 15.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Incorrect. That was the scream of a mildly inconvenienced barista. Your account is now cursed.",
+          "timestamp": 18.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Please hold while I transfer you to the abyss.",
+          "timestamp": 25.0
+        }
+      ],
+      "jokes": [
+        {
+          "timestamp": 2.0,
+          "description": "Hook premise: Canceling cable is literally dealing with a demon from hell."
+        },
+        {
+          "timestamp": 4.0,
+          "description": "Damnation package includes HBO."
+        },
+        {
+          "timestamp": 8.0,
+          "description": "Dave admits to only watching mud hut videos instead of premium TV."
+        },
+        {
+          "timestamp": 12.0,
+          "description": "Verification question is reciting ancestral screams."
+        },
+        {
+          "timestamp": 16.0,
+          "description": "Dave's weak, pathetic attempt at a scream."
+        },
+        {
+          "timestamp": 19.0,
+          "description": "Demon identifies the scream as a barista's, curses the account."
+        },
+        {
+          "timestamp": 22.0,
+          "description": "CUTAWAY: A hipster barista in an apron drops a portafilter and screams 'Ahhh?' exactly like Dave."
+        },
+        {
+          "timestamp": 28.0,
+          "description": "The hold music in Hell is a crypto podcast."
+        },
+        {
+          "timestamp": 36.0,
+          "description": "Visual gag of Dave extreme aging on hold."
+        },
+        {
+          "timestamp": 40.0,
+          "description": "Demon casually eating a human bone like a breakroom snack."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "end_time": 80.0,
+      "visuals": "Back to split screen. Dave looks older.",
+      "audio_cues": [
+        "SFX: Loud chewing noises",
+        "SFX: Bear roar in the distance"
+      ],
+      "dialogue": [
+        {
+          "speaker": "ZALGOR",
+          "text": "Okay, I can waive the cancellation fee if you solve this riddle.",
+          "timestamp": 42.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Is the riddle 'Why is Comcast so terrible?'",
+          "timestamp": 45.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "No, that's not a riddle, that's a business model.",
+          "timestamp": 48.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Just cancel it! I'm moving to the woods! I'm going off the grid!",
+          "timestamp": 53.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Woods are not in our service area, but we can bill you for roaming bear attacks.",
+          "timestamp": 57.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Would you like to upgrade your router? The new one doesn't smell like burning hair.",
+          "timestamp": 68.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Smoking kills, which is great for our Q3 quota.",
+          "timestamp": 79.0
+        }
+      ],
+      "jokes": [
+        {
+          "timestamp": 43.0,
+          "description": "Demon offers riddle instead of simple cancellation."
+        },
+        {
+          "timestamp": 46.0,
+          "description": "Dave complains about Comcast."
+        },
+        {
+          "timestamp": 49.0,
+          "description": "Demon confirms terrible service is their actual business model."
+        },
+        {
+          "timestamp": 55.0,
+          "description": "Dave threatens to live off the grid."
+        },
+        {
+          "timestamp": 58.0,
+          "description": "Demon offers to bill him for roaming bear attacks."
+        },
+        {
+          "timestamp": 62.0,
+          "description": "CUTAWAY: A large grizzly bear wearing a Comcast badge is shaking down a camper."
+        },
+        {
+          "timestamp": 70.0,
+          "description": "Demon offers router upgrade that just doesn't smell bad."
+        },
+        {
+          "timestamp": 74.0,
+          "description": "Visual gag: Router is literally on fire in the background."
+        },
+        {
+          "timestamp": 77.0,
+          "description": "Dave casually leans over and uses the burning router to light a cigarette."
+        },
+        {
+          "timestamp": 80.0,
+          "description": "Hell's quota relies on smoking deaths."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "end_time": 120.0,
+      "visuals": "Dave is sweating, rubbing his temples. Zalgor is filing his nails with a small pitchfork.",
+      "audio_cues": [
+        "SFX: Crashing sound of thunder",
+        "SFX: Call drop tone"
+      ],
+      "dialogue": [
+        {
+          "speaker": "DAVE",
+          "text": "Look, Zalgor, buddy. What do I have to do? Blood sacrifice? Firstborn child?",
+          "timestamp": 82.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "We stopped doing blood sacrifices in '98. Too messy. HR hated it. We just need a verbal agreement.",
+          "timestamp": 86.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Okay, I verbally agree to cancel.",
+          "timestamp": 91.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "No, to the terms and conditions. The ones you didn't read in 2014 when you clicked 'Accept'.",
+          "timestamp": 95.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Fine! I agree! Whatever it is, I agree! Take everything!",
+          "timestamp": 100.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Excellent. Your soul is now legally property of the cable company. And your service is... wait for it...",
+          "timestamp": 105.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Cancelled.",
+          "timestamp": 110.0
+        },
+        {
+          "speaker": "DAVE",
+          "text": "Finally! ...Wait, my soul?",
+          "timestamp": 114.0
+        },
+        {
+          "speaker": "ZALGOR",
+          "text": "Yep. The retention department will collect it on Tuesday between 8 AM and Never. Have a hellish day!",
+          "timestamp": 118.0
+        }
+      ],
+      "jokes": [
+        {
+          "timestamp": 83.0,
+          "description": "Dave casually offers blood sacrifice out of desperation."
+        },
+        {
+          "timestamp": 87.0,
+          "description": "Demon says blood sacrifices are outdated 90s HR policy."
+        },
+        {
+          "timestamp": 92.0,
+          "description": "Dave tries simple logic on a demon."
+        },
+        {
+          "timestamp": 96.0,
+          "description": "Demon brings up the unread T&Cs from a decade ago."
+        },
+        {
+          "timestamp": 101.0,
+          "description": "Dave blindly agrees to terms and conditions, the classic fatal mistake."
+        },
+        {
+          "timestamp": 106.0,
+          "description": "Soul becomes property of the cable company."
+        },
+        {
+          "timestamp": 111.0,
+          "description": "Demon dramatically pauses for 5 seconds before saying cancelled, making Dave sweat."
+        },
+        {
+          "timestamp": 115.0,
+          "description": "Dave's delayed realization of the soul clause."
+        },
+        {
+          "timestamp": 118.5,
+          "description": "Punchline Payoff: The classic terrible cable company appointment window applied to soul collection ('between 8 AM and Never')."
+        },
+        {
+          "timestamp": 119.9,
+          "description": "Final sendoff 'Have a hellish day' as the call drops with a fiery click."
+        }
+      ]
+    }
+  ]
+}
