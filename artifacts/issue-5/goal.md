@@ -1,0 +1,7 @@
+Generate Audio Assets
+
+SHARED SPEC: Create an original ~2 minute animated comedy short as a single MP4 file, final.mp4 (1280x720, with audio: character voices and music/SFX). Build it around one original funny joke or comedic premise in the irreverent, satirical adult-animation style aimed at the same audience as Family Guy or South Park: punchy dialogue, fast pacing, cutaway gags. You have full creative control over the joke, characters, art style and animation technique - simple South-Park-style cutout animation is fine. Hard requirements: a real watchable video close to 120 seconds, synced dialogue audio, a hook in the first 5 seconds, no dead air, and a punchline payoff at the end. TASK: Read spec.md and script.json. Generate the entire audio package for the animation. Use Python and a Text-to-Speech API to generate distinct character voices for all dialogue lines. Synthesize or download appropriate royalty-free sound effects and background music. Name the files so they map clearly to the timestamps and events in script.json. Package all generated audio files (WAV/MP3) into a single archive named audio.zip. HOW IT WILL BE JUDGED: The file audio.zip must exist, contain playable audio files for every spoken line and SFX in script.json, and score at least 4/5 on the audio quality and delivery dimensions defined in spec.md.
+
+Save the main deliverable as audio.zip.
+
+Already provided in your working directory: artifacts/issue-2/spec.md, artifacts/issue-3/script.json
