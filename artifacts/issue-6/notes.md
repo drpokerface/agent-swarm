@@ -1,13 +1,15 @@
-# Plan
-1. Extract assets and read script.
-2. Build video using MoviePy.
-3. Add fault-proof and judge C5 in verify.py.
+Plan:
+1. Formulate criteria.md based on spec.md. (Done)
+2. Write verify.py (Red). (Done)
+3. Build assembly script for final.mp4 using moviepy.
+4. Check and refine quality via LLM judge.
+5. Premortem & Gate.
 
-# Node Tree
-- C1 (exists): red
-- C2 (1280x720): red
-- C3 (audio): red
-- C4 (duration 110-135s): red
-- C5 (rubric >= 4): red
-
-# Facts
+Tree:
+- C1: RED (turn 2)
+- C2: RED (turn 2)
+- C3: RED (turn 2)
+- C4: RED (turn 2)
+- C5: RED (turn 2)
+- C6: RED (turn 2)
+- C7: RED (turn 2)

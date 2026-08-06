@@ -1,0 +1,3 @@
+rejection 1/5:
+verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
+VERDICT: FAIL - Not implemented

@@ -1,13 +1,16 @@
+# Criteria
+# Final Animation Assembly criteria
+
 ## Interpretation
-1. The goal requires exactly one final artifact: `final.mp4`.
-2. Resolution must be 1280x720.
-3. Audio must be present (synced dialogue, music/SFX).
-4. "~120 seconds" means between 110.0 and 130.0 seconds inclusive.
-5. Quality is judged by a model against the `artifacts/issue-2/spec.md` rubric, requiring a median score of >= 4 across 3 samples for all categories.
+- The final output must be exactly one video file, `final.mp4`.
+- The resolution must be exactly 1280x720 (progressive scan, 16:9 aspect ratio).
+- The duration must be approximately 120 seconds. We define this strictly as 115 to 125 seconds.
+- Sound must be fully synchronized: character mouth or presence matching the respective dialogue files.
+- The final.mp4 must not contain silence (dead air) longer than 1.5 seconds.
+- The video must score at least 4/5 on the spec.md rubric.
 
 ## Claims
-- C1: `final.mp4` exists on disk.
-- C2: `final.mp4` is a video file with a resolution of 1280x720.
-- C3: `final.mp4` has an audio track.
-- C4: `final.mp4` has a duration between 110.0 and 130.0 seconds.
-- C5: A perceptual judge scoring `final.mp4` against `spec.md` returns a median score >= 4 for all categories.
+- **C1**: `final.mp4` exists, has resolution 1280x720, and contains video and audio streams.
+- **C2**: `final.mp4` duration is between 115 and 125 seconds.
+- **C3**: `final.mp4` contains no silence longer than 1.5 seconds.
+- **C4**: `final.mp4` passes the rubric judge scoring >= 4/5 in Pacing, Sync, and Output.
