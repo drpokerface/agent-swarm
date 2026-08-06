@@ -1,9 +1,9 @@
 ## Interpretation
-The goal requires generating the audio package for an animated comedy short based on script.json. 
-We interpret the deliverable `audio.zip` as requiring completeness (all lines and cues) and quality.
+Generate the entire audio package for the animation script, including dialogue lines and audio cues (BGM and SFX). Pack them into a single archive named audio.zip.
 
-## Criteria
-C1: `audio.zip` exists in the workspace.
-C2: `audio.zip` contains exactly 23 dialogue files (matching `dialogue_*.mp3` or `.wav`) and 7 SFX/Music files (matching `sfx_*.mp3` or `music_*.mp3` or `.wav`).
-C3: Every file in `audio.zip` is a valid MP3 or WAV file (verified via magic bytes).
-C4: A sampled dialogue audio file scores a median of >= 4/5 on a Delivery and Quality rubric across 3 independent LLM judges, anchored to professional adult animations.
+## Claims
+C1: audio.zip exists on disk.
+C2: audio.zip is a valid zip file.
+C3: audio.zip contains exactly 30 files (23 dialogue lines + 7 audio cues).
+C4: Every file in audio.zip has a non-zero size and correct naming/extension.
+C5: Spoken dialogue lines have clear pronunciation and high-quality generation, judged >= 4.0/5 median score.
