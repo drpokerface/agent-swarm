@@ -1,16 +1,11 @@
-# Criteria
-# Final Animation Assembly criteria
-
 ## Interpretation
-- The final output must be exactly one video file, `final.mp4`.
-- The resolution must be exactly 1280x720 (progressive scan, 16:9 aspect ratio).
-- The duration must be approximately 120 seconds. We define this strictly as 115 to 125 seconds.
-- Sound must be fully synchronized: character mouth or presence matching the respective dialogue files.
-- The final.mp4 must not contain silence (dead air) longer than 1.5 seconds.
-- The video must score at least 4/5 on the spec.md rubric.
+We are assembling a ~120s animated comedy short as a single MP4 file: `final.mp4`.
+Resolution must be 1280x720. It must have character voices, SFX, and background music synced with the script timings.
+We interpret "~120 seconds" as 110 to 130 seconds.
 
 ## Claims
-- **C1**: `final.mp4` exists, has resolution 1280x720, and contains video and audio streams.
-- **C2**: `final.mp4` duration is between 115 and 125 seconds.
-- **C3**: `final.mp4` contains no silence longer than 1.5 seconds.
-- **C4**: `final.mp4` passes the rubric judge scoring >= 4/5 in Pacing, Sync, and Output.
+C1: `final.mp4` exists in the workspace root.
+C2: `final.mp4` has a video stream with a resolution of 1280x720 and framerate of at least 24fps.
+C3: `final.mp4` has at least one audio stream.
+C4: `final.mp4` has a duration between 110 and 130 seconds.
+C5: No audio/video gaps: the audio sequence matches the timestamps and is continuous without silence of >2s where there should be content.

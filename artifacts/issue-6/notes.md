@@ -1,15 +1,10 @@
-Plan:
-1. Formulate criteria.md based on spec.md. (Done)
-2. Write verify.py (Red). (Done)
-3. Build assembly script for final.mp4 using moviepy.
-4. Check and refine quality via LLM judge.
-5. Premortem & Gate.
+# Plan & Node Tree
+- [ ] C1: `final.mp4` exists in workspace root (RED)
+- [ ] C2: `final.mp4` resolution is 1280x720 (RED)
+- [ ] C3: `final.mp4` has audio stream (RED)
+- [ ] C4: `final.mp4` duration is between 110 and 130 seconds (RED)
+- [ ] C5: No audio/video gaps (RED)
 
-Tree:
-- C1: RED (turn 2)
-- C2: RED (turn 2)
-- C3: RED (turn 2)
-- C4: RED (turn 2)
-- C5: RED (turn 2)
-- C6: RED (turn 2)
-- C7: RED (turn 2)
+# Facts
+- F1 | Resolution must be 1280x720 | Turn 1
+- F2 | Duration must be ~120s (110s to 130s) | Turn 1

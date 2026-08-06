@@ -1,3 +1,2 @@
 rejection 1/5:
-verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-VERDICT: FAIL - Not implemented
+a hostile audit rejected the claim: The verifier fails on multiple fronts regarding coverage and implementation. 1) It completely ignores its own criterion C5 (checking for audio/video gaps or dead air). 2) It claims C2 will check for a framerate of at least 24fps, but the implementation only checks width and height. 3) It completely ignores the qualitative and content requirements of the shared spec (synced dialogue, cutaway gags, character sprites, backgrounds, punchline, and scoring 4/5 on the provided rubric). A lazy author could easily bypass this by generating a static 120-second 1280x720 video of a black screen with a silent audio track.

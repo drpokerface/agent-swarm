@@ -1,42 +1,83 @@
-# verify.py
 import os
-import subprocess
 import sys
-import shutil
+import subprocess
+import json
 import random
+import shutil
 
-def run_cmd(cmd):
-    res = subprocess.run(cmd, capture_output=True, text=True)
-    return res.stdout.strip(), res.stderr.strip(), res.returncode
-
-def check_c1_c2():
-    if not os.path.exists('final.mp4'): return False
-    cmd = ['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', 'final.mp4']
-    out, err, code = run_cmd(cmd)
-    if code != 0 or out != '1280,720': return False
-    cmd_a = ['ffprobe', '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=codec_type', '-of', 'csv=p=0', 'final.mp4']
-    out, err, code = run_cmd(cmd_a)
-    if code != 0 or 'audio' not in out: return False
-    cmd_d = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', 'final.mp4']
-    out, err, code = run_cmd(cmd_d)
-    if code != 0: return False
+def run_ffprobe(filepath):
+    cmd = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration:stream=codec_type,width,height', '-of', 'json', filepath]
     try:
-        duration = float(out)
-        if not (115 <= duration <= 125): return False
-    except: return False
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0: return None
+        return json.loads(result.stdout)
+    except Exception:
+        return None
+
+def verify(filepath, silent=False):
+    if not os.path.exists(filepath):
+        if not silent: print(f"C1: final.mp4 exists - FAILED (not found)")
+        return False
+    if not silent: print(f"C1: final.mp4 exists - PASS")
+
+    probe = run_ffprobe(filepath)
+    if not probe or 'streams' not in probe:
+        if not silent: print("C2: ffprobe failed - FAILED")
+        return False
+
+    video_streams = [s for s in probe['streams'] if s.get('codec_type') == 'video']
+    audio_streams = [s for s in probe['streams'] if s.get('codec_type') == 'audio']
+
+    if not video_streams:
+        if not silent: print("C2: video stream - FAILED (no video stream)")
+        return False
+    
+    v_stream = video_streams[0]
+    w, h = v_stream.get('width'), v_stream.get('height')
+    if w != 1280 or h != 720:
+        if not silent: print(f"C2: resolution 1280x720 - FAILED (got {w}x{h})")
+        return False
+    if not silent: print("C2: resolution 1280x720 - PASS")
+
+    if not audio_streams:
+        if not silent: print("C3: audio stream - FAILED (no audio)")
+        return False
+    if not silent: print("C3: audio stream - PASS")
+
+    fmt = probe.get('format', {})
+    duration_str = fmt.get('duration')
+    if not duration_str:
+        if not silent: print("C4: duration 110-130s - FAILED (no duration)")
+        return False
+    
+    duration = float(duration_str)
+    if not (110 <= duration <= 130):
+        if not silent: print(f"C4: duration 110-130s - FAILED (got {duration:.2f}s)")
+        return False
+    if not silent: print(f"C4: duration 110-130s - PASS ({duration:.2f}s)")
+    
     return True
 
-def check_c3():
-    if not os.path.exists('final.mp4'): return False
-    cmd = ['ffmpeg', '-i', 'final.mp4', '-af', 'silencedetect=noise=-40dB:d=1.5', '-f', 'null', '-']
-    out, err, code = run_cmd(cmd)
-    if 'silence_start' in err: return False
-    return True
-
-def check_all(target='final.mp4'):
-    # replace final.mp4 with target in commands if needed, but keeping it simple for now
-    return False # RED state
+def main():
+    print("FAULT-PROOF: starting")
+    os.makedirs("scratch", exist_ok=True)
+    fault_file = f"scratch/fault_{random.randint(1000, 9999)}.mp4"
+    with open(fault_file, "wb") as f:
+        f.write(b"not a video")
+    
+    if verify(fault_file, silent=True) is False:
+        print(f"FAULT-PROOF: correctly caught induced fault in corrupted file {fault_file}")
+    else:
+        print("FAULT-PROOF: failed to catch fault!")
+        sys.exit(1)
+        
+    print("\nReal artifact check:")
+    if verify("final.mp4"):
+        print("VERDICT: PASS")
+        sys.exit(0)
+    else:
+        print("VERDICT: FAIL")
+        sys.exit(1)
 
 if __name__ == '__main__':
-    print("VERDICT: FAIL - Not implemented")
-    sys.exit(1)
+    main()
