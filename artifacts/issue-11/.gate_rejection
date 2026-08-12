@@ -1,0 +1,4 @@
+rejection 1/5:
+a hostile audit rejected the claim: 1. Missing Coverage for Artistic Consistency (C4): The specification explicitly requires 'ensuring artistic consistency' (and the agent even listed it as C4 in its criteria), but `verify.py` completely omits any check for visual consistency (e.g., via a perceptual tool or VLM call).
+2. Shallow Completeness Check: The specification requires checking 'completeness against the script.json asset list'. However, `verify.py` never reads `artifacts/issue-9/script.json`. Instead, it hardcodes a check for exactly 4 backgrounds and 19 sprites, bypassing dynamic verification of the actual script requirements.
+3. Weak Fault-Proof: The fault-proof only tests a missing zip file (C1), but fails to test if the verifier correctly catches incorrectly sized backgrounds (C2), missing transparency (C3), or inconsistent art style (C4).

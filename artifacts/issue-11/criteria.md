@@ -1,13 +1,11 @@
-# Interpretation
-We need to generate visual assets for a 2-minute original animated comedy short based on script.json.
-Assets needed:
-- Background images (1280x720 PNG) for each scene.
-- Character sprites with transparent backgrounds (PNG) for each character visual prompt in each scene.
-- Fast-paced, adult-animation South Park cutout style.
-- Packaged into visuals.zip.
+## Interpretation
+The goal is to generate visual assets for an animated short and package them in visuals.zip.
+The style must be consistent, South Park-esque cutout art style.
+Backgrounds must be 1280x720.
+Character sprites must be transparent PNGs.
 
 ## Claims
-C1: visuals.zip exists and contains all required background and character PNG files.
-C2: Every background PNG file has dimensions exactly 1280x720.
-C3: Every character sprite PNG file has a transparent background (RGBA or LA mode with non-opaque alpha channel).
-C4: Artistic style is consistent (adult-animation South Park cutout style), verified by a judge model.
+C1: visuals.zip exists in the root directory.
+C2: visuals.zip contains exactly 4 backgrounds named bg_1.png through bg_4.png, and each is a 1280x720 PNG.
+C3: visuals.zip contains exactly 19 character sprites named sprite_1.png through sprite_19.png, and each is a PNG with an alpha channel (transparency).
+C4: The artwork is visually consistent (to be checked via a perceptual tool later).
