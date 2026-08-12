@@ -1,0 +1,10 @@
+rejection 1/5:
+verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
+=== RESULTS ===
+C1: PASS: audio.zip exists
+C2: FAILED: length mismatch script=38 vs timeline=36
+C3: FAILED: not verified
+C4: FAILED: not verified
+C5: FAILED: not verified
+C6: FAILED: not verified
+VERDICT: FAIL
