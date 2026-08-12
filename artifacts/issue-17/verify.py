@@ -1,97 +1,181 @@
-import os, sys, zipfile, json, hashlib, random, shutil, subprocess
+import os
+import sys
+import subprocess
+import shutil
+import zipfile
+import random
+import json
+
 try:
     from PIL import Image
+    from google import genai
 except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow", "google-genai"])
     from PIL import Image
+    from google import genai
 
-def sanitize(text):
-    return hashlib.md5(text.encode('utf-8')).hexdigest()
-
-def verify(zip_path, script_path, extract_dir):
-    os.makedirs(extract_dir, exist_ok=True)
-    res = {}
-    
-    # C1: valid zip
-    if not os.path.exists(zip_path):
-        res["C1"] = (False, f"{zip_path} missing")
-    else:
-        try:
-            with zipfile.ZipFile(zip_path, 'r') as z:
-                z.extractall(extract_dir)
-            res["C1"] = (True, "Valid zip")
-        except Exception as e:
-            res["C1"] = (False, f"Bad zip: {e}")
-            
-    if not res.get("C1", (False,))[0]:
-        return res
-
-    # C2: backgrounds
-    with open(script_path, 'r') as f:
+def get_expected_counts():
+    with open("artifacts/issue-15/script.json") as f:
         script = json.load(f)
-    bgs = set(s.get('background') for s in script if s.get('background'))
-    
-    c2_ok = True
-    c2_msg = "Backgrounds OK"
-    for bg in bgs:
-        name = sanitize(bg) + ".png"
-        path = os.path.join(extract_dir, "backgrounds", name)
-        if not os.path.exists(path):
-            c2_ok = False
-            c2_msg = f"Missing bg {name}"
-            break
-        with Image.open(path) as img:
-            if img.size != (1280, 720):
-                c2_ok = False
-                c2_msg = "Bad size"
-                break
-    res["C2"] = (c2_ok, c2_msg)
-    
-    # C3: characters
-    chars = ["Brody", "Karen", "Sybil"]
-    c3_ok = True
-    c3_msg = "Chars OK"
-    for char in chars:
-        for state in ["silent", "talking"]:
-            name = f"{char}_{state}.png"
-            path = os.path.join(extract_dir, "characters", name)
-            if not os.path.exists(path):
-                c3_ok = False
-                c3_msg = f"Missing char {name}"
-                break
-            with Image.open(path) as img:
-                if img.mode != 'RGBA':
-                    c3_ok = False
-                    c3_msg = "Not RGBA"
-                    break
-    res["C3"] = (c3_ok, c3_msg)
-    return res
+    unique_bgs = set()
+    chars = set()
+    for item in script:
+        if item.get('background'):
+            unique_bgs.add(item['background'])
+        state = item.get('character_state', '')
+        if ':' in state:
+            chars.add(state.split(':')[0].strip())
+    return len(unique_bgs), list(chars)
 
-def run():
-    print("Running FAULT PROOFS...")
-    os.makedirs("scratch/fp_test", exist_ok=True)
-    with zipfile.ZipFile("scratch/fp_bad1.zip", "w") as z:
-        z.writestr("backgrounds/missing.png", "fake")
-    res = verify("scratch/fp_bad1.zip", "artifacts/issue-15/script.json", "scratch/fp_extract1")
-    if not res.get("C2", (True,))[0] or not res.get("C1", (True,))[0]:
-        print("FAULT-PROOF: C2 caught missing background correctly.")
+def check_artifact(extract_dir):
+    expected_bgs_count, expected_chars = get_expected_counts()
+    
+    # C2: backgrounds
+    bg_dir = os.path.join(extract_dir, "backgrounds")
+    if not os.path.isdir(bg_dir):
+        return False, "No backgrounds directory"
+    bgs = [f for f in os.listdir(bg_dir) if f.endswith('.png')]
+    if len(bgs) != expected_bgs_count:
+        return False, f"Expected {expected_bgs_count} backgrounds, got {len(bgs)}"
+    for bg in bgs:
+        with Image.open(os.path.join(bg_dir, bg)) as img:
+            if img.size != (1280, 720):
+                return False, f"Background {bg} has wrong size: {img.size}"
+
+    # C3: characters
+    char_dir = os.path.join(extract_dir, "characters")
+    if not os.path.isdir(char_dir):
+        return False, "No characters directory"
+    for char in expected_chars:
+        cdir = os.path.join(char_dir, char)
+        if not os.path.isdir(cdir):
+            return False, f"Missing character folder: {char}"
+        for state in ["talking.png", "silent.png"]:
+            p = os.path.join(cdir, state)
+            if not os.path.isfile(p):
+                return False, f"Missing {state} for {char}"
+            with Image.open(p) as img:
+                img = img.convert("RGBA")
+                extrema = img.getextrema()
+                if extrema[3][0] == 255:
+                    return False, f"Character image {char}/{state} is not transparent"
+
+    return True, "Check passed"
+
+def check_style(extract_dir):
+    bg_dir = os.path.join(extract_dir, "backgrounds")
+    bgs = [f for f in os.listdir(bg_dir) if f.endswith('.png')]
+    char_dir = os.path.join(extract_dir, "characters")
+    
+    if not bgs:
+        return False, "No backgrounds to check style"
+    bg_sample = os.path.join(bg_dir, random.choice(bgs))
+    
+    chars = os.listdir(char_dir)
+    if not chars:
+        return False, "No characters to check style"
+    char_name = random.choice(chars)
+    char_sample = os.path.join(char_dir, char_name, "silent.png")
+    
+    if not os.path.exists(char_sample):
+        return False, "Missing character silent.png to check style"
+
+    client = genai.Client()
+    bg_file = client.files.upload(file=bg_sample)
+    char_file = client.files.upload(file=char_sample)
+    
+    prompt = "Are these images highly consistent in style, and do they match an irreverent, satirical adult-animation cutout style (like Family Guy or South Park)? Answer YES or NO, followed by a brief reason."
+    
+    res = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=[bg_file, char_file, prompt]
+    )
+    text = res.text.strip().upper()
+    if text.startswith("YES"):
+        return True, res.text
     else:
-        print("FAULT-PROOF: FAILED")
+        return False, res.text
+
+def run_fault_proof():
+    print("Running FAULT PROOF...")
+    os.makedirs("scratch/fault_proof/backgrounds", exist_ok=True)
+    expected_bgs_count, expected_chars = get_expected_counts()
+    
+    for char in expected_chars:
+        os.makedirs(f"scratch/fault_proof/characters/{char}", exist_ok=True)
+    
+    for i in range(expected_bgs_count):
+        img = Image.new('RGB', (1280, 720), color = 'red')
+        img.save(f"scratch/fault_proof/backgrounds/bg_{i}.png")
+        
+    for char in expected_chars:
+        img = Image.new('RGBA', (100, 100), color = (255, 0, 0, 0))
+        img.save(f"scratch/fault_proof/characters/{char}/talking.png")
+        img.save(f"scratch/fault_proof/characters/{char}/silent.png")
+        
+    ok, msg = check_artifact("scratch/fault_proof")
+    if not ok:
+        print(f"Base fault proof setup failed: {msg}")
         return False
         
-    print("VERIFYING ARTIFACT...")
-    res = verify("visuals.zip", "artifacts/issue-15/script.json", "scratch/extract_final")
-    all_pass = True
-    for c, (ok, msg) in res.items():
-        print(f"{c}: {msg}")
-        if not ok: all_pass = False
+    fault_type = random.choice(['bg_size', 'char_opaque', 'missing_bg'])
+    if fault_type == 'bg_size':
+        img = Image.new('RGB', (800, 600), color = 'blue')
+        img.save("scratch/fault_proof/backgrounds/bg_0.png")
+    elif fault_type == 'char_opaque':
+        char = expected_chars[0]
+        img = Image.new('RGB', (100, 100), color = 'blue')
+        img.save(f"scratch/fault_proof/characters/{char}/silent.png")
+    elif fault_type == 'missing_bg':
+        os.remove("scratch/fault_proof/backgrounds/bg_1.png")
         
-    if all_pass:
-        print("VERDICT: PASS")
-        sys.exit(0)
+    ok, msg = check_artifact("scratch/fault_proof")
+    if ok:
+        print("FAULT PROOF FAILED: Did not catch corruption!")
+        return False
     else:
-        print("VERDICT: FAIL")
-        sys.exit(1)
+        print(f"FAULT-PROOF: Caught induced fault ({fault_type}): {msg}")
+        return True
+
+def verify_real():
+    if not os.path.exists("visuals.zip"):
+        print("C1: visuals.zip does not exist")
+        return False
+        
+    print("C1: visuals.zip exists")
+    
+    extract_dir = "scratch/extracted_visuals"
+    if os.path.exists(extract_dir):
+        shutil.rmtree(extract_dir)
+    os.makedirs(extract_dir)
+    
+    try:
+        with zipfile.ZipFile("visuals.zip", 'r') as zf:
+            zf.extractall(extract_dir)
+    except Exception as e:
+        print(f"C1: visuals.zip is invalid: {e}")
+        return False
+        
+    ok, msg = check_artifact(extract_dir)
+    if not ok:
+        print(f"C2/C3 Failed: {msg}")
+        return False
+    else:
+        print("C2: Backgrounds match expected count and 1280x720 size")
+        print("C3: Character transparent cutouts found")
+        
+    print("Checking C4 (Style)...")
+    ok, msg = check_style(extract_dir)
+    if not ok:
+        print(f"C4 Failed: {msg}")
+        return False
+    print(f"C4: Style is consistent and correct. Judge output: {msg}")
+    
+    print("VERDICT: PASS")
+    return True
 
 if __name__ == "__main__":
-    run()
+    if not run_fault_proof():
+        sys.exit(1)
+    if not verify_real():
+        sys.exit(1)

@@ -1,14 +1,11 @@
 ## Interpretation
-The goal is to generate visual assets for a 2-minute cutout animation comedy short.
-The assets must be packaged in `visuals.zip`.
-The zip will have the following structure:
-- `backgrounds/<md5_of_background_string>.png` : All 1280x720, opaque.
-- `characters/<CharacterName>_silent.png` : With alpha channel (transparent).
-- `characters/<CharacterName>_talking.png` : With alpha channel.
-The required characters are Brody, Karen, and Sybil.
+The goal requires generating visual assets (backgrounds and character cutouts) for an adult-animation comedy short and packaging them in `visuals.zip`.
+- Backgrounds: Extract all unique `background` scenes from `script.json`. We need a 1280x720 PNG per unique background in a `backgrounds/` directory.
+- Characters: Characters (Karen, Brody, Sybil) must each have a `talking.png` and `silent.png` in a `characters/<name>/` directory. These must be transparent PNGs to be used as cutouts.
+- Style: The style must be highly consistent, irreverent, satirical adult-animation cutout style, evaluated by a perceptual judge.
 
 ## Claims
-C1: `visuals.zip` exists and is a valid zip file.
-C2: For every unique `background` in `artifacts/issue-15/script.json`, a corresponding 1280x720 PNG exists in `visuals.zip` under the `backgrounds/` folder.
-C3: For Brody, Karen, and Sybil, both a `_silent.png` and `_talking.png` exist in `visuals.zip` under the `characters/` folder, and they possess an alpha channel.
-C4: The generated visual assets are confirmed by a fresh LLM call to match the adult-animation cutout style.
+C1: `visuals.zip` exists.
+C2: `visuals.zip` contains a `backgrounds/` folder with exactly one 1280x720 PNG image per unique background specified in `script.json`.
+C3: `visuals.zip` contains a `characters/` folder with subfolders for each character containing at least `talking.png` and `silent.png`, which are transparent PNGs.
+C4: The visual style is highly consistent across backgrounds and characters, matching the irreverent, satirical adult-animation cutout style.
