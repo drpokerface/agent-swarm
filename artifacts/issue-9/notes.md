@@ -1,11 +1,15 @@
 # Plan
-1. Read spec & capabilities (Turn 1).
-2. Write criteria.md and verify.py RED (Turn 2).
-3. Draft initial script.json based on specs (Turn 3).
-4. Run self-correction/judging loop on script.json using Gemini Pro (Turn 4+).
-5. Verify and finish.
+1. Extract and understand constraints from spec.md and slice_package.zip.
+2. Formulate script schema and write initial verify.py (RED).
+3. Generate initial script.json.
+4. Run verify.py, judge script with LLM.
+5. Improve script based on judge feedback until it passes.
 
 # Node Tree
-(pending criteria.md)
+- Root Goal (script.json)
+  - C1: Valid JSON [ ]
+  - C2: Matches Schema [ ]
+  - C3: Word count 250-350 [ ]
+  - C4: Subjective Quality (rubric + judge) [ ]
 
 # Facts

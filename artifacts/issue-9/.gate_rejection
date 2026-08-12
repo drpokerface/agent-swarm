@@ -1,0 +1,4 @@
+rejection 1/5:
+a hostile audit rejected the claim: 1. The subjective quality check (C4) runs the LLM judge only once, directly violating the agent's own criteria which demands 'The median score from 3 runs'.
+2. The threshold implemented in the C4 check is >= 7 on a 1-10 scale, which mismatches the criteria.md specification of '>= 4.0' (implying a 1-5 scale).
+3. There is no fault-proof implemented for C4; the verifier never proves that its subjective judge would actually reject a terrible or off-topic script.
