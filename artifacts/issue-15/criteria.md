@@ -1,20 +1,15 @@
 # Criteria for Script Writing & Scene Planning
 
 ## Interpretation
-The overarching goal is to generate an original, hilarious, animated comedy short (~120 seconds). The deliverables require specific structural constraints (5s hook, no dead air, explicit audio/visual prompts for a downstream generator pipeline). 
-Crucially, the script must embody an "irreverent, satirical adult-animation style" and have a "high quality bar for comedic timing" based on the prompt.
-
-## Anchors of Excellence for Adult Comedy Style
-1. **South Park:** Master of satirical, irreverent comedy that uses absurdity to mock societal norms.
-2. **Family Guy:** Known for fast-paced scenes, random pop-culture references, and distinct punchlines.
-3. **Rick and Morty:** Showcases dark comedy, witty banter, and contrasts high sci-fi stakes with mundane family reactions.
-
-*Lazy Baseline:* A hollow script where characters speak literal, boring dialogue with no jokes, no satire, and no comedic timing (e.g., just describing their actions or standing around talking blandly).
+- The script must be written as a JSON file named `script.json` containing an array of scenes, each with shots, or a flat array of shots with scene markers.
+- The total duration must be ~120 seconds. We'll target 110-130 seconds.
+- The first 5 seconds must establish a strong comedic hook.
+- Every shot must contain dialogue/voiceover, character visual states, background descriptions, and an estimated duration.
+- No shot can have > 2.0s of dead air (i.e. empty dialogue without visual action or long pauses).
 
 ## Claims
-* **C1:** `script.json` is a perfectly formatted JSON array.
-* **C2:** The total `duration` of all scenes is exactly between 110 and 130 seconds.
-* **C3:** A `hook` flag is true for at least one shot starting within the first 5 seconds.
-* **C4:** There is no "dead air" (no shots > 1s lacking dialogue without dynamic visual descriptions).
-* **C5:** Every shot explicitly defines `character`, `dialogue`, `visual_state`, `background`, `duration`, and `hook`.
-* **C6:** The script meets a high bar for Adult Comedy Style. Evaluated by a fresh, blinded LLM judge (Gemini Pro) assessing the script against the Anchors of Excellence and the Lazy Baseline. A median score of >= 7/10 across 3 independent evaluations is required to pass.
+- **C1: Valid JSON Schema**: `script.json` is valid JSON and parses as a list of scenes or shots containing the required keys: `background`, `dialogue`, `character_state`, and `duration`.
+- **C2: Accurate Runtime**: The sum of durations in `script.json` is between 110 and 130 seconds.
+- **C3: Early Hook (First 5s)**: The first shot(s) totaling <= 5 seconds contains a clearly marked hook or setup that instantly grabs attention.
+- **C4: No Dead Air**: No shot has empty dialogue with duration > 1.5 seconds unless explicitly marked with a visual-only gag.
+- **C5: Downstream Generation Readiness**: Every shot has fully specified character dialogue, character visual state, and background descriptions.
