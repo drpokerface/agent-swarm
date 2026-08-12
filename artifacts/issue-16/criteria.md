@@ -1,11 +1,13 @@
 ## Interpretation
-The goal is to generate and package audio for a comedy short based on `script.json`.
-The deliverable is `audio.zip`, which contains all audio tracks and a `timeline.json` mapping them to the script.
+The goal is to generate audio assets for an animated comedy short based on `script.json`. The deliverable is `audio.zip`.
+The zip must contain:
+- Audio files (TTS for dialogue, plus SFX/music).
+- `timeline.json` mapping each audio file to its script index.
+- All TTS files must be trimmed of starting and ending silence.
+- Different characters must have distinct voices.
 
-## Claims
-- C1: `audio.zip` exists in the workspace root.
-- C2: `timeline.json` exists inside `audio.zip` and is a valid JSON array with length matching `script.json`.
-- C3: Every file referenced in `timeline.json` (`dialogue_audio`, elements of `sfx_audio`, and `bgm_audio`) exists inside `audio.zip`.
-- C4: The timeline references at least one SFX file and at least one BGM file across the scenes.
-- C5: Dialogue audio files are trimmed, possessing less than 150ms of silence at the beginning and end (silence defined as < -40dBFS).
-- C6: Distinct voices are used. The median pitches of Brody, Karen, and Sybil's dialogue files differ significantly (at least 5Hz difference between their averages).
+C1: `audio.zip` exists and is a valid zip archive.
+C2: `timeline.json` is present in the root of `audio.zip`.
+C3: `timeline.json` covers all shots from `script.json` and maps them to valid audio files present in the zip.
+C4: The referenced dialogue audio files are trimmed (no significant leading/trailing silence).
+C5: At least one SFX or background music track is present in the zip.

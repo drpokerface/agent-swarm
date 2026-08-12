@@ -1,17 +1,21 @@
-Plan:
-1. Read artifacts and inspect capabilities/scripts (Done, Turn 4)
-2. Write criteria.md (Done, Turn 5)
-3. Write verify.py (RED) (Done, Turn 5)
-4. Generate TTS distinct voices for Brody, Karen, Sybil using OpenAI TTS (Turn 6+)
-5. Trim dead air from TTS using pydub
-6. Generate or fetch SFX/BGM
-7. Generate timeline.json
-8. Zip to audio.zip
+# Plan
+1. Understand spec and characters.
+2. Write criteria.md and verify.py.
+3. Generate audio files for each shot using TTS (OpenAI if available, else gTTS with pitch/speed modifications).
+4. Trim silences using pydub.
+5. Generate/find SFX/Music.
+6. Create timeline.json.
+7. Package to audio.zip.
+8. Refine audio quality based on judge feedback.
 
-Nodes:
-- C1: audio.zip exists (RED)
-- C2: timeline.json valid (RED)
-- C3: Files exist (RED)
-- C4: SFX/BGM exist (RED)
-- C5: Trimmed audio (RED)
-- C6: Distinct voices (RED)
+# Node Tree
+- C1 (audio.zip exists): red (turn 14)
+- C2 (timeline.json covers all shots): red (turn 14)
+- C3 (all referenced audio files exist): red (turn 14)
+- C4 (silences trimmed): red (turn 14)
+- C5 (SFX included): red (turn 14)
+- C6 (distinct comedic voices): red (turn 14)
+
+# Facts
+F1 | TTS capabilities: OpenAI and gTTS are installed (turn 4).
+F2 | 38 script items (turn 13).
