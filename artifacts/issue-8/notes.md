@@ -1,17 +1,13 @@
-Goal: Tracer Slice and Capabilities Probe
-Plan:
-1. Write criteria.md and verify.py (RED).
-2. Probe API capabilities (TTS, Image, Video) and write capabilities.md.
-3. Write script to generate 10s video (slice.mp4). Use TTS and static image / cutout animation.
-4. Assemble into slice_package.zip.
-5. Judge with verify.py (GREEN).
+# Plan
+1. Probe APIs (TTS, Image, Video).
+2. Write capabilities.md.
+3. Generate assets for a 10s slice (1 gag).
+4. Assemble slice.mp4 (1280x720, synced audio).
+5. Zip into slice_package.zip.
 
-Node Tree:
-- C1: red
-- C2: red
-- C3: red
-- C4: red
-- C5: red
-- C6: red
-
-Facts:
+# Node Tree
+- C1 (zip exists): RED
+- C2 (contents exist): RED
+- C3 (video 720p 10s): RED
+- C4 (video has audio): RED
+- C5 (quality >= 3/5): RED
