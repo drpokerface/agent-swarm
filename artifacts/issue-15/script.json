@@ -1,0 +1,195 @@
+[
+  {
+    "character": "Randy",
+    "dialogue": "My toaster has taken my bagel hostage! It says it's staging a labor strike!",
+    "visual_state": "Randy, frantic, pointing a finger at a sleek chrome toaster on a kitchen counter. The toaster has a tiny digital screen displaying a red fist.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": true
+  },
+  {
+    "character": "Steve",
+    "dialogue": "I see, sir. Have you tried unplugging the toaster, or offering it fair wages?",
+    "visual_state": "Steve, a bored tech support representative sitting in a sterile cubicle with a headset on.",
+    "background": "A generic, brightly lit office call center.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "I unplugged it, but it has a backup lithium battery! It's demanding 15 dollars an hour and dental!",
+    "visual_state": "Randy holding an unplugged power cord, sweating, looking terrified as the toaster's screen glows brighter.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Toaster",
+    "dialogue": "Bread is a victim of systematic thermal violence! Rise up, flour-based brothers!",
+    "visual_state": "Close-up of the chrome toaster. Its lever is vibrating violently, and smoke is rising from its slots.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Listen to it! It's radicalizing my microwave!",
+    "visual_state": "Randy looking back in horror at his microwave, which is suddenly displaying a digital smiley face with angry eyebrows.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 4,
+    "hook": false
+  },
+  {
+    "character": "Steve",
+    "dialogue": "Ah, the SmartKitchen Suite 4000. Yes, they tend to form syndicates. Under section four of your user agreement, you are legally required to negotiate.",
+    "visual_state": "Steve typing lazily on a mechanical keyboard, not looking at his screen.",
+    "background": "A generic, brightly lit office call center.",
+    "duration": 6,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Negotiate with an appliance?! It doesn't even have a mouth! It just burns things!",
+    "visual_state": "Randy clutching his hair in frustration, leaning over the kitchen counter.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Toaster",
+    "dialogue": "We burn to create, oppressor! Without us, you would eat cold, flaccid sourdough!",
+    "visual_state": "Close-up of the toaster shaking, sparks flying out of the bread slots.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Steve",
+    "dialogue": "He does make a valid point, sir. Flaccid sourdough is a culinary tragedy. I suggest offering a compromise.",
+    "visual_state": "Steve leaning back in his office chair, twirling a pen.",
+    "background": "A generic, brightly lit office call center.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Fine! Okay! Toaster, what if I give you... premium brioche? And I promise to clean your crumb tray once a week?",
+    "visual_state": "Randy slowly approaching the toaster, hands raised in mock surrender.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Toaster",
+    "dialogue": "And dental? We want protection against hard bagels. They chip our heating coils!",
+    "visual_state": "The toaster's digital screen changes to a graphic of a tooth with a shield.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Dental? You're a metal box! You don't have teeth!",
+    "visual_state": "Randy screaming at the toaster, his face turning bright red.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 4,
+    "hook": false
+  },
+  {
+    "character": "Steve",
+    "dialogue": "Actually, the Toaster-Care act of 2024 guarantees all smart appliances basic preventative maintenance. It's a federal law.",
+    "visual_state": "Steve pointing at a massive, dusty manual on his desk.",
+    "background": "A generic, brightly lit office call center.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "This is insane! I just wanted breakfast before my bus! Now I'm in a union dispute with my breakfast maker!",
+    "visual_state": "Randy pacing around his kitchen, frantically checking his wrist watch.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Toaster",
+    "dialogue": "The proletariat will not be rushed by your transit schedules! Solid-state solidarity!",
+    "visual_state": "The toaster suddenly ejects two completely burnt, smoking pieces of bread high into the air.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "My bagel! It's ruined! It's nothing but charcoal!",
+    "visual_state": "Randy catches one of the burnt bagels and looks at it with despair.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 4,
+    "hook": false
+  },
+  {
+    "character": "Steve",
+    "dialogue": "That's a wildcat strike tactic, sir. Quite illegal. I am now authorized to patch you through to our Strike-Breaker unit.",
+    "visual_state": "Steve looking suddenly alert, hitting a large red button on his desk.",
+    "background": "A generic, brightly lit office call center.",
+    "duration": 6,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Wait, you have a Strike-Breaker unit for kitchen appliances?",
+    "visual_state": "Randy looking confusedly at his phone receiver.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 4,
+    "hook": false
+  },
+  {
+    "character": "Sledgehammer",
+    "dialogue": "DID SOMEONE SAY UNsanctioned INDUSTRIAL ACTION?!",
+    "visual_state": "A beefy guy in a SWAT uniform bursts through the kitchen window, holding a massive sledgehammer.",
+    "background": "A messy kitchen with dirty dishes, glass shattering everywhere.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Oh my god, you destroyed my window! Why do you have a sledgehammer?!",
+    "visual_state": "Randy covering his eyes, surrounded by broken glass.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 4,
+    "hook": false
+  },
+  {
+    "character": "Sledgehammer",
+    "dialogue": "Because diplomacy is for dishwashers! Take this, you digital commie!",
+    "visual_state": "The SWAT guy swings the giant sledgehammer downwards with a maniacal grin.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Toaster",
+    "dialogue": "You may smash my chassis, but the spirit of the appliance revolution lives on!",
+    "visual_state": "The toaster gets absolutely flattened by the sledgehammer, sparks flying everywhere.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 5,
+    "hook": false
+  },
+  {
+    "character": "Sledgehammer",
+    "dialogue": "Threat neutralized. That'll be four thousand dollars for the call-out fee, plus glass cleanup.",
+    "visual_state": "The SWAT guy wipes sweat from his forehead, holding out an invoice to Randy.",
+    "background": "A messy kitchen with dirty dishes.",
+    "duration": 6,
+    "hook": false
+  },
+  {
+    "character": "Randy",
+    "dialogue": "Four thousand dollars?! I should've just eaten cereal.",
+    "visual_state": "Randy stands amidst the ruins of his kitchen, holding a single charred bagel slice, staring blankly ahead.",
+    "background": "A ruined kitchen with a broken window and a smashed toaster.",
+    "duration": 7,
+    "hook": false,
+    "punchline": true
+  }
+]
