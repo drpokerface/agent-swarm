@@ -1,10 +1,10 @@
+# Criteria
 ## Interpretation
-The goal requires probing for models/tools, logging findings in capabilities.md, and building a 10-second end-to-end animated comedy slice (slice.mp4) at 1280x720 with synced audio, achieving at least 3/5 on the spec.md rubric. Both files must be in slice_package.zip.
+The goal requires probing capabilities (TTS, Image, Video) using available API keys (Gemini), documenting them in capabilities.md, and producing a 10s slice.mp4 (1280x720, synced audio). Both go into slice_package.zip.
 
 ## Claims
-C1: slice_package.zip exists and is a valid zip.
-C2: slice_package.zip extracts to capabilities.md and slice.mp4.
-C3: capabilities.md lists API limits for the chosen tools.
-C4: slice.mp4 is exactly 1280x720 resolution.
-C5: slice.mp4 contains an audio stream.
-C6: A fresh judge scores the video at least 3/5 on Pacing, Joke Density, and Audio-Visual Polish.
+C1: slice_package.zip exists.
+C2: slice_package.zip contains capabilities.md and slice.mp4.
+C3: slice.mp4 is a valid video file with 1280x720 resolution.
+C4: slice.mp4 contains an audio track.
+C5: slice.mp4 scores >= 3/5 against the spec.md rubric using an LLM judge.
