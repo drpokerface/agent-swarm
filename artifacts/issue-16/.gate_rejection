@@ -1,9 +1,2 @@
 rejection 1/5:
-verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-FAULT-PROOF: Caught fault: C1: Fail - exception reading zip: Unterminated string starting at: line 1 column 2 (char 1)
-C1: Pass - audio.zip is a valid zip archive
-C2: Pass - timeline.json exists and is valid JSON
-C3: Pass - all referenced audio files exist in zip
-C5: Pass - audio files are non-empty
-C6: Fail - timeline.json lacks SFX or BGM
-VERDICT: FAIL
+a hostile audit rejected the claim: COVERAGE: The verifier is fundamentally incomplete and ignores almost all core requirements of the specification. 1) It never reads `script.json` to verify that TTS audio was actually generated for every line of dialogue (dialogue coverage). 2) It does not check for the required trimming of dead air (no unintended silences at the start/end of clips). 3) It completely omits any subjective or perceptual checks for distinct comedic voices, audio quality, or whether the SFX/music tracks are present and appropriate. 4) It doesn't even verify that the files referenced in the timeline and present in the ZIP are valid audio files (.wav or .mp3). An author could pass this verifier by submitting an empty `timeline.json` or one referencing dummy text files.

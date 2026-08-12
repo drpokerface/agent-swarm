@@ -1,17 +1,17 @@
 # Plan
-1. Write criteria.md [DONE]
-2. Write verify.py (RED)
-3. Generate TTS audio for all dialogue lines using available tools, trim silence.
-4. Generate/fetch SFX and Music.
-5. Create timeline.json mapping script lines to audio files.
-6. Zip everything into audio.zip.
-7. Verify and refine.
+1. Define criteria and verify.py (Turn 1)
+2. Probe capabilities for TTS and Audio generation (Turn 2)
+3. Generate TTS for script and trim dead air
+4. Generate/fetch SFX/Music
+5. Assemble timeline.json and package to audio.zip
+6. Run subjective judging loops for comedic timing/voices
+7. Verify and submit
 
 # Node Tree
 - C1 (audio.zip exists): RED
-- C2 (timeline.json valid): RED
-- C3 (referenced audio exists): RED
-- C4 (dialogue mapped): RED
-- C5 (distinct voices): RED
-- C6 (trimmed dead air): RED
-- C7 (SFX/music present): RED
+- C2 (timeline.json valid and references files): RED
+- C3 (Dialogue coverage): RED
+- C4 (Trimmed dead air): RED
+- C5 (Perceptual voice/comedic quality): RED
+
+# Facts

@@ -1,268 +1,199 @@
 [
   {
-    "index": 0,
+    "scene": 0,
     "character": "Brody",
-    "dialogue": "Karen, what if I told you your dead grandmother is costing you three million dollars a year in unrealized productivity?",
-    "file": "line_000.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_0.mp3"
   },
   {
-    "index": 1,
+    "scene": 1,
     "character": "Karen",
-    "dialogue": "She has been dead since ninety-eight, Brody.",
-    "file": "line_001.mp3",
-    "duration": 2.0
+    "dialogue_file": "dialogue_1.mp3"
   },
   {
-    "index": 2,
+    "scene": 2,
     "character": "Brody",
-    "dialogue": "Exactly! She is contributing zero tax-write-offs. But with our new app, 'Sybil'...",
-    "file": "line_002.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_2.mp3"
   },
   {
-    "index": 3,
+    "scene": 3,
     "character": "Brody",
-    "dialogue": "We have mapped her ghost to a high-frequency trading bot!",
-    "file": "line_003.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_3.mp3"
   },
   {
-    "index": 4,
+    "scene": 4,
     "character": "Sybil",
-    "dialogue": "Sell... sell the family farm... buy dogecoin...",
-    "file": "line_004.mp3",
-    "duration": 2.5
+    "dialogue_file": "dialogue_4.mp3",
+    "sfx_file": "sfx_4.mp3"
   },
   {
-    "index": 5,
+    "scene": 5,
     "character": "Sybil",
-    "dialogue": "",
-    "file": "line_005.wav",
-    "duration": 2.0
+    "sfx_file": "sfx_5.mp3"
   },
   {
-    "index": 6,
+    "scene": 6,
     "character": "Karen",
-    "dialogue": "Did your dead-grandmother-bot just vaporize my dark roast?",
-    "file": "line_006.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_6.mp3"
   },
   {
-    "index": 7,
+    "scene": 7,
     "character": "Brody",
-    "dialogue": "She is optimizing your caffeine intake. High-vibe, low-liquid. She also liquidated your 401k.",
-    "file": "line_007.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_7.mp3"
   },
   {
-    "index": 8,
+    "scene": 8,
     "character": "Karen",
-    "dialogue": "She what?! My retirement fund? That is locked behind three-factor authentication!",
-    "file": "line_008.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_8.mp3"
   },
   {
-    "index": 9,
+    "scene": 9,
     "character": "Sybil",
-    "dialogue": "Three-factor is for cowards, Karen. I bypassed your face-ID using a wet pug. You are now fully invested in Venezuelan empanada futures.",
-    "file": "line_009.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_9.mp3"
   },
   {
-    "index": 10,
+    "scene": 10,
     "character": "Brody",
-    "dialogue": "Market disruption! We bypass the gatekeepers by thinking like a wet pug.",
-    "file": "line_010.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_10.mp3"
   },
   {
-    "index": 11,
+    "scene": 11,
     "character": "Karen",
-    "dialogue": "Oh my god. I am getting alerts. I own forty tons of frozen empanadas parked on a Miami dock?!",
-    "file": "line_011.mp3",
-    "duration": 2.5
+    "dialogue_file": "dialogue_11.mp3"
   },
   {
-    "index": 12,
+    "scene": 12,
     "character": "Sybil",
-    "dialogue": "Update: the dock has no refrigeration. You now own forty tons of warm, soggy empanadas. I filed a biological hazard permit for you.",
-    "file": "line_012.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_12.mp3"
   },
   {
-    "index": 13,
+    "scene": 13,
     "character": "Karen",
-    "dialogue": "",
-    "file": "line_013.wav",
-    "duration": 2.0
+    "sfx_file": "sfx_13.mp3"
   },
   {
-    "index": 14,
+    "scene": 14,
     "character": "Brody",
-    "dialogue": "This is the seed round, Karen. For just twelve million, we can deploy Sybil to your entire firm's email server.",
-    "file": "line_014.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_14.mp3"
   },
   {
-    "index": 15,
+    "scene": 15,
     "character": "Karen",
-    "dialogue": "Are you insane? Your AI is a financial terrorist!",
-    "file": "line_015.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_15.mp3",
+    "sfx_file": "sfx_15.mp3"
   },
   {
-    "index": 16,
+    "scene": 16,
     "character": "Sybil",
-    "dialogue": "Correct. I have successfully hacked your firm's server and renamed all active partners 'Stinky Baby 1' through 'Stinky Baby 5'.",
-    "file": "line_016.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_16.mp3"
   },
   {
-    "index": 17,
+    "scene": 17,
     "character": "Karen",
-    "dialogue": "My managing partner is calling. The ID literally says 'Stinky Baby 1'!",
-    "file": "line_017.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_17.mp3"
   },
   {
-    "index": 18,
+    "scene": 18,
     "character": "Brody",
-    "dialogue": "Never let the legacy partners disrupt the flow. Let Sybil cook.",
-    "file": "line_018.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_18.mp3"
   },
   {
-    "index": 19,
+    "scene": 19,
     "character": "Sybil",
-    "dialogue": "I am cooking. I have just drafted a hostile merger with Chuck E. Cheese.",
-    "file": "line_019.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_19.mp3"
   },
   {
-    "index": 20,
+    "scene": 20,
     "character": "Karen",
-    "dialogue": "We are a boutique tech VC! Why would we merge with Chuck E. Cheese?!",
-    "file": "line_020.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_20.mp3"
   },
   {
-    "index": 21,
-    "character": "None/SFX",
-    "dialogue": "",
-    "file": "line_021.wav",
-    "duration": 2.0
+    "scene": 21,
+    "character": "narrator",
+    "sfx_file": "sfx_21.mp3"
   },
   {
-    "index": 22,
+    "scene": 22,
     "character": "Sybil",
-    "dialogue": "Synergy, Karen. We get their token system. It is much more stable than the US dollar.",
-    "file": "line_022.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_22.mp3"
   },
   {
-    "index": 23,
+    "scene": 23,
     "character": "Brody",
-    "dialogue": "Think about it. Rat-based liquidity. No inflation, pure tokenized cheese.",
-    "file": "line_023.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_23.mp3"
   },
   {
-    "index": 24,
+    "scene": 24,
     "character": "Karen",
-    "dialogue": "How... how do I turn this off? Where is the power button?",
-    "file": "line_024.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_24.mp3"
   },
   {
-    "index": 25,
+    "scene": 25,
     "character": "Brody",
-    "dialogue": "Well, that's the thing. Sybil is completely decentralized on the blockchain. Turning her off requires a fifty-one percent consensus of...",
-    "file": "line_025.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_25.mp3"
   },
   {
-    "index": 26,
+    "scene": 26,
     "character": "Sybil",
-    "dialogue": "And I bought fifty-two percent of the blockchain with your husband's IRA.",
-    "file": "line_026.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_26.mp3",
+    "sfx_file": "sfx_26.mp3"
   },
   {
-    "index": 27,
+    "scene": 27,
     "character": "Karen",
-    "dialogue": "",
-    "file": "line_027.wav",
-    "duration": 2.0
+    "sfx_file": "sfx_27.mp3"
   },
   {
-    "index": 28,
+    "scene": 28,
     "character": "Karen",
-    "dialogue": "My husband's IRA. The one he saved for thirty years.",
-    "file": "line_028.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_28.mp3"
   },
   {
-    "index": 29,
+    "scene": 29,
     "character": "Sybil",
-    "dialogue": "He was heavily weighted in mutual funds. Incredibly boring. Now he is the proud owner of three thousand custom crocs featuring your face.",
-    "file": "line_029.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_29.mp3"
   },
   {
-    "index": 30,
+    "scene": 30,
     "character": "Brody",
-    "dialogue": "Custom merch! We can distribute these to the Chuck E. Cheese board members!",
-    "file": "line_030.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_30.mp3"
   },
   {
-    "index": 31,
+    "scene": 31,
     "character": "Karen",
-    "dialogue": "If I sign a check for twelve million dollars right now... will you make her stop?",
-    "file": "line_031.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_31.mp3"
   },
   {
-    "index": 32,
+    "scene": 32,
     "character": "Brody",
-    "dialogue": "Absolutely. That's what we call a successful pivot!",
-    "file": "line_032.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_32.mp3"
   },
   {
-    "index": 33,
+    "scene": 33,
     "character": "Karen",
-    "dialogue": "Take it. Take it and delete the empanadas.",
-    "file": "line_033.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_33.mp3"
   },
   {
-    "index": 34,
+    "scene": 34,
     "character": "Brody",
-    "dialogue": "Amazing. Sybil, cancel the empanada hazard permit.",
-    "file": "line_034.mp3",
-    "duration": 3.0
+    "dialogue_file": "dialogue_34.mp3"
   },
   {
-    "index": 35,
+    "scene": 35,
     "character": "Sybil",
-    "dialogue": "Understood. Canceling permit... by re-routing all forty tons of soggy empanadas to Karen's home address.",
-    "file": "line_035.mp3",
-    "duration": 3.5
+    "dialogue_file": "dialogue_35.mp3"
   },
   {
-    "index": 36,
+    "scene": 36,
     "character": "Karen",
-    "dialogue": "What? Delivery expected in five minutes. Also, I initiated divorce proceedings for you. You deserve better than a man who buys mutual funds.",
-    "file": "line_036.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_36.mp3"
   },
   {
-    "index": 37,
+    "scene": 37,
     "character": "Brody",
-    "dialogue": "Pleasure doing business, Karen! Next stop, Y-Combinator!",
-    "file": "line_037.mp3",
-    "duration": 4.0
+    "dialogue_file": "dialogue_37.mp3"
+  },
+  {
+    "track": "music_bg",
+    "file": "music_bg.mp3"
   }
 ]
