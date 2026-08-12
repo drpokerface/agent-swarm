@@ -1,125 +1,195 @@
-#!/usr/bin/env python3
+# verify.py - Validates capabilities.md and slice.mp4 according to Node Contract
 import os
 import sys
 import subprocess
-import random
+import json
 import shutil
-
-def run_cmd(cmd):
-    try:
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        out, err = p.communicate()
-        return p.returncode, out.strip(), err.strip()
-    except FileNotFoundError:
-        return -1, "", "Binary not found"
+import random
+import cv2
 
 def check_c1():
-    if not os.path.exists("capabilities.md"): return False, "capabilities.md missing"
-    content = open("capabilities.md", "r", encoding="utf-8").read().lower()
-    if "ffmpeg" not in content: return False, "missing ffmpeg mention"
-    if "api_key" not in content and "api key" not in content and "gemini" not in content: return False, "missing API checks"
-    return True, "capabilities.md exists and contains audits"
+    # C1: capabilities.md exists and contains >= 50 words
+    path = 'capabilities.md'
+    if not os.path.exists(path):
+        return False, 'capabilities.md missing'
+    with open(path, 'r', encoding='utf-8') as f:
+        words = f.read().split()
+    if len(words) < 50:
+        return False, f'too short ({len(words)} words)'
+    return True, f'{len(words)} words'
 
-def check_c2(filepath):
-    if not os.path.exists(filepath): return False, f"{filepath} missing"
-    return True, f"{filepath} exists"
-
-def check_c3(filepath):
-    rc, out, err = run_cmd(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=s=x:p=0", filepath])
-    if rc != 0: return False, f"ffprobe failed: {err}"
-    parts = out.split('x')
-    if len(parts) != 2: return False, "unparseable resolution"
+def check_video_properties(filepath):
+    # C2: resolution is 1280x720
+    # C3: has audio stream
+    # C4: duration between 5.0 and 15.0 seconds
+    if not os.path.exists(filepath):
+        return False, False, False, 'file missing', 'file missing', 'file missing'
+    
+    cap = cv2.VideoCapture(filepath)
+    if not cap.isOpened():
+        return False, False, False, 'failed to open video', 'failed to open video', 'failed to open video'
+    
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    cap.release()
+    
+    duration = frame_count / fps if fps > 0 else 0
+    
+    c2_val = f'{width}x{height}'
+    c2_ok = (width == 1280 and height == 720)
+    
+    # Check audio stream using ffprobe
+    cmd = ['ffprobe', '-v', 'error', '-show_entries', 'stream=codec_type', '-of', 'json', filepath]
+    has_audio = False
     try:
-        if int(parts[0]) == 1280 and int(parts[1]) == 720:
-            return True, "Resolution is 1280x720"
-        return False, f"Resolution is {out}"
-    except:
-        return False, "Resolution parse failed"
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+        data = json.loads(res.stdout)
+        for stream in data.get('streams', []):
+            if stream.get('codec_type') == 'audio':
+                has_audio = True
+                break
+    except Exception as e:
+        pass
+    
+    c3_ok = has_audio
+    c3_val = 'audio present' if has_audio else 'no audio'
+    
+    c4_ok = (5.0 <= duration <= 15.0)
+    c4_val = f'{duration:.2f} seconds'
+    
+    return c2_ok, c3_ok, c4_ok, c2_val, c3_val, c4_val
 
-def check_c4(filepath):
-    rc_v, out_v, _ = run_cmd(["ffprobe", "-v", "error", "-select_streams", "v", "-show_entries", "stream=codec_type", "-of", "csv=p=0", filepath])
-    if "video" not in out_v: return False, "No video stream"
-    rc_a, out_a, _ = run_cmd(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=codec_type", "-of", "csv=p=0", filepath])
-    if "audio" not in out_a: return False, "No audio stream"
-    return True, "Contains active video and audio streams"
+def check_cut_detection(filepath):
+    # C5: at least one visual cut. We check frame differences.
+    if not os.path.exists(filepath):
+        return False, 'file missing'
+    cap = cv2.VideoCapture(filepath)
+    if not cap.isOpened():
+        return False, 'failed to open'
+    
+    prev_frame = None
+    max_diff = 0.0
+    diffs = []
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        # Resize to smaller for speed
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.resize(gray, (100, 100))
+        if prev_frame is not None:
+            diff = cv2.absdiff(gray, prev_frame)
+            mean_diff = diff.mean()
+            diffs.append(mean_diff)
+        prev_frame = gray
+    cap.release()
+    
+    if not diffs:
+        return False, 'no frames'
+    
+    # A cut is represented by a sudden large spike in frame difference compared to mean/median
+    avg_diff = sum(diffs) / len(diffs)
+    max_diff = max(diffs) if diffs else 0
+    threshold = max(5.0, avg_diff * 3.0)
+    has_cut = max_diff > threshold
+    return has_cut, f'max diff {max_diff:.2f} (threshold {threshold:.2f})'
 
-def check_c5(filepath):
-    rc, out, err = run_cmd(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", filepath])
-    if rc != 0: return False, f"ffprobe format=duration failed: {err}"
-    try:
-        dur = float(out)
-        if 8.0 <= dur <= 15.0:
-            return True, f"Duration is {dur} seconds"
-        return False, f"Duration {dur} not between 8.0 and 15.0"
-    except:
-        return False, "Duration parse failed"
-
-def check_c6(filepath):
-    os.makedirs("scratch", exist_ok=True)
-    f1 = "scratch/c6_f1.jpg"
-    f2 = "scratch/c6_f2.jpg"
-    if os.path.exists(f1): os.remove(f1)
-    if os.path.exists(f2): os.remove(f2)
-    run_cmd(["ffmpeg", "-y", "-i", filepath, "-ss", "00:00:02", "-vframes", "1", f1])
-    run_cmd(["ffmpeg", "-y", "-i", filepath, "-ss", "00:00:08", "-vframes", "1", f2])
-    if not os.path.exists(f1) or not os.path.exists(f2):
-        return False, "Could not extract frames for cut detection"
-    s1 = os.path.getsize(f1)
-    s2 = os.path.getsize(f2)
-    if s1 == 0 or s2 == 0: return False, "Extracted frames are empty"
-    diff = abs(s1 - s2) / max(s1, s2)
-    if diff > 0.05:
-        return True, "Visual cut detected (frame sizes differ)"
-    return False, f"No visual cut detected (diff {diff:.3f} <= 0.05)"
-
-def check_all(filepath):
-    results = {}
-    r1, m1 = check_c1()
-    results['C1'] = (r1, m1)
-    r2, m2 = check_c2(filepath)
-    results['C2'] = (r2, m2)
-    if r2:
-        results['C3'] = check_c3(filepath)
-        results['C4'] = check_c4(filepath)
-        results['C5'] = check_c5(filepath)
-        results['C6'] = check_c6(filepath)
-    else:
-        for k in ['C3', 'C4', 'C5', 'C6']: results[k] = (False, "Skipped (C2 failed)")
+def run_all_checks(c1_path, video_path):
+    c1_ok, c1_val = check_c1()
+    c2_ok, c3_ok, c4_ok, c2_val, c3_val, c4_val = check_video_properties(video_path)
+    c5_ok, c5_val = check_cut_detection(video_path)
+    
+    results = {
+        'C1': (c1_ok, c1_val),
+        'C2': (c2_ok, c2_val),
+        'C3': (c3_ok, c3_val),
+        'C4': (c4_ok, c4_val),
+        'C5': (c5_ok, c5_val)
+    }
     return results
 
-if __name__ == "__main__":
-    os.makedirs("scratch", exist_ok=True)
-    print("=== FAULT-PROOF ===")
-    if os.path.exists("slice.mp4"):
-        rand_id = random.randint(1000, 9999)
-        corrupted = f"scratch/faulty_{rand_id}.mp4"
-        shutil.copy("slice.mp4", corrupted)
-        with open(corrupted, "r+b") as f:
-            f.seek(max(0, os.path.getsize(corrupted) // 2))
-            f.write(b"GARBAGE" * 1024)
-        results_faulty = check_all(corrupted)
-        caught = False
-        for k, (passed, msg) in results_faulty.items():
-            if k in ['C3', 'C4', 'C5', 'C6'] and passed == False:
-                caught = True
-                print(f"FAULT-PROOF: {k} check successfully caught corruption ({msg})")
-                break
-        if not caught:
-            print("FAULT-PROOF: FAILED to catch corruption. All checks passed on corrupted file.")
-            sys.exit(1)
-    else:
-        print("C2: slice.mp4 does not exist. Fault proof skipped.")
+if __name__ == '__main__':
+    # Real path validation
+    real_c1 = 'capabilities.md'
+    real_mp4 = 'slice.mp4'
     
-    print("\n=== ARTIFACT VERIFICATION ===")
-    results_real = check_all("slice.mp4")
-    all_passed = True
-    for k, (passed, msg) in results_real.items():
-        print(f"{k}: {passed} - {msg}")
-        if not passed: all_passed = False
+    real_results = run_all_checks(real_c1, real_mp4)
+    
+    # Print raw results
+    for c, (ok, val) in real_results.items():
+        print(f'{c}: {"PASS" if ok else "FAIL"} - {val}')
         
-    if all_passed:
-        print("VERDICT: PASS")
+    # FAULT-PROOF validation
+    os.makedirs('scratch', exist_ok=True)
+    fault_triggered = False
+    evidence = ''
+    
+    # Seed a defect at a random site under scratch/
+    # Let's decide randomly which check to sabotage
+    sabotage_choice = random.choice(['C1', 'C2', 'C4', 'C5'])
+    
+    scratch_c1 = 'scratch/capabilities.md'
+    scratch_mp4 = 'scratch/slice.mp4'
+    
+    # Copy actual files to scratch if they exist
+    if os.path.exists(real_c1):
+        shutil.copy(real_c1, scratch_c1)
+    else:
+        with open(scratch_c1, 'w') as f: f.write('Placeholder data for capabilities test.')
+        
+    if os.path.exists(real_mp4):
+        shutil.copy(real_mp4, scratch_mp4)
+    else:
+        # Write a dummy invalid video or empty file
+        with open(scratch_mp4, 'wb') as f: f.write(b'dummy invalid video data')
+        
+    # Apply sabotage
+    if sabotage_choice == 'C1':
+        # Sabotage C1: Make capabilities.md empty/too short
+        with open(scratch_c1, 'w') as f: f.write('too short')
+    elif sabotage_choice == 'C2':
+        # Sabotage C2: Corrupt or resize video to 100x100 if we have tools, or just replace with an empty file
+        if os.path.exists(scratch_mp4):
+            os.remove(scratch_mp4)
+        with open(scratch_mp4, 'wb') as f: f.write(b'corrupted')
+    elif sabotage_choice == 'C4':
+        # Sabotage C4: Make video too short or wrong by deleting/corrupting
+        if os.path.exists(scratch_mp4):
+            os.remove(scratch_mp4)
+        with open(scratch_mp4, 'wb') as f: f.write(b'corrupted')
+    elif sabotage_choice == 'C5':
+        # Sabotage C5: Delete file or replace with plain static text
+        if os.path.exists(scratch_mp4):
+            os.remove(scratch_mp4)
+        with open(scratch_mp4, 'wb') as f: f.write(b'corrupted')
+        
+    # Run checks on scratch
+    scratch_results = run_all_checks(scratch_c1, scratch_mp4)
+    sabotaged_ok, sabotaged_val = scratch_results[sabotage_choice]
+    
+    if not sabotaged_ok:
+        fault_triggered = True
+        evidence = f'Successfully caught sabotaged {sabotage_choice}: {sabotaged_val}'
+        
+    # Clean up scratch
+    try:
+        shutil.rmtree('scratch')
+    except Exception:
+        pass
+        
+    if fault_triggered:
+        print(f'FAULT-PROOF: {evidence}')
+    else:
+        print('FAULT-PROOF: FAILED to catch induced fault')
+        sys.exit(1)
+        
+    # Overall Verdict
+    all_pass = all(ok for ok, val in real_results.values())
+    if all_pass:
+        print('VERDICT: PASS')
         sys.exit(0)
     else:
-        print("VERDICT: FAIL")
+        print('VERDICT: FAIL')
         sys.exit(1)

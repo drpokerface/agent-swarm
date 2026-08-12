@@ -1,0 +1,6 @@
+rejection 1/5:
+a hostile audit rejected the claim: 1. Flaky Fault-Proof & Hardcoded Path: `check_c1()` hardcodes the path `'capabilities.md'` instead of using the passed `c1_path`. Since the fault-proof randomly selects a criterion to sabotage, there is a 25% chance it selects 'C1'. When it does, it sabotages the scratch file, but `check_c1()` reads the real file, causing the fault-proof to fail and the script to crash (flaky test).
+2. Coverage (Capabilities): `check_c1` only counts words (>= 50). It completely fails to verify the contents of `capabilities.md` (checking if it actually documents generation tools, APIs, and findings as requested).
+3. Coverage (Video Contents): The verification checks for the presence of *any* audio stream via ffprobe, completely ignoring the requirements for 'synced dialogue audio' and a 'voiced line'.
+4. Coverage (Quality Baseline): The node tree mentions 'C6 (Quality Baseline)', but it was omitted from the criteria and `verify.py`. There is no check whatsoever (e.g., using an LLM judge) to determine if the result matches or beats the baseline quality in `spec.md` or contains the required irreverent comedic elements.
+5. Environment Assumptions: The script assumes the `ffprobe` binary is available in

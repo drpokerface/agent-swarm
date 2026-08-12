@@ -1,0 +1,5 @@
+file 'scene1.png'
+duration 2.5
+file 'scene2_mod.png'
+duration 3.0
+file 'scene2_mod.png'
