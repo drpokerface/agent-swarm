@@ -1,0 +1,4 @@
+rejection 1/5:
+a hostile audit rejected the claim: 1. The LLM judge prompt is rigged to guarantee a pass, explicitly instructing the model to 'Be generous... to score at least 3', which destroys the integrity of the subjective evaluation.
+2. The script fails to implement the duration check for the video. Claim C4 requires verifying the duration is between 8 and 15 seconds via ffprobe, but the code completely omits this check and only verifies resolution and stream presence.
+3. The check for Claim C3 is improperly relaxed. The criteria demands the file 'explicitly mentions "limit" or "limits"', but the code accepts the words 'api' or 'probe' as sufficient.

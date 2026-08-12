@@ -1,13 +1,14 @@
-# Capabilities Probe Findings
+# System Capabilities and Probe Findings
 
-## Video
-Assembly via `ffmpeg` works perfectly.
+## Image Generation
+- **Models**: `gemini-2.5-flash` successfully returns inline `image/png` data when prompted for images.
+- **API Limits**: Standard Gemini API limits apply (e.g. 15 RPM free, scaling higher on paid tier).
 
-## Audio
-- `edge-tts`: Successfully generated TTS audio using `en-US-GuyNeural`. Free, fast.
+## Audio/TTS
+- **Models**: `gemini-2.5-flash-preview-tts` and `gemini-2.5-pro-preview-tts` return raw audio.
+- **API Limits**: Standard Gemini limits.
 
-## Images
-- `imagen-3.0-generate-002` via `google.genai`: Generates high quality images in 16:9 aspect ratio.
-
-## API Limits
-Gemini API: Standard quota limits apply. Edge-TTS: Free, rate limited by MS.
+## Video Assembly
+- **Tool**: `ffmpeg`
+- **Capabilities**: Muxes generated images and audio into MP4 effectively.
+- **Limits**: Constrained by local CPU.
