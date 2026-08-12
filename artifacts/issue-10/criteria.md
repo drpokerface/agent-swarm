@@ -1,8 +1,14 @@
+# Criteria for Audio Production
+
 ## Interpretation
-The goal is to produce all dialogue audio lines via TTS, and gather/generate BGM and SFX for an adult animated comedy short. The audio must be clear, distinct for each character, and packaged into `audio.zip` containing all audio files (WAV or MP3) and a `manifest.json`.
+- We must generate all TTS dialogue audio files for the script 'script.json' using the strongest available APIs (Gemini 2.5 TTS or similar).
+- We must procure or generate simple royalty-free sound effects (SFX) and background music (BGM) to ensure no dead air.
+- All files must be in WAV or MP3 format and packaged into 'audio.zip' with a manifest JSON mapping files to script lines.
+- We need to verify high audio quality, distinct character voices, and lack of silent gaps.
 
 ## Claims
-1. **C1 (Zip Exists):** `audio.zip` exists in the workspace root and is a valid zip archive.
-2. **C2 (Manifest Exists):** `audio.zip` contains a file named `manifest.json` at its root.
-3. **C3 (Completeness):** `manifest.json` contains a `dialogue` list with exactly one entry for each line in `artifacts/issue-9/script.json`, plus `bgm` and `sfx` fields.
-4. **C4 (Audio Validity):** Every file referenced in `manifest.json` exists in `audio.zip` and is a valid audio file with >0s duration (verified via ffprobe).
+C1: The file 'audio.zip' exists and is a valid zip archive containing 'manifest.json' and the generated audio files.
+C2: 'manifest.json' correctly maps each dialogue/script item to its generated audio file.
+C3: All dialogue files exist as valid non-empty WAV or MP3 files.
+C4: Character voices are distinct and high-quality.
+C5: BGM and SFX are present, non-empty, and can be used to fill dead air.

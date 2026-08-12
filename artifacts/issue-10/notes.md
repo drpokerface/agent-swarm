@@ -1,13 +1,15 @@
-# Working Notes
+# Notes
 
 ## Plan
-1. Inspect inputs (schema of script.json, tools in slice_package)
-2. Write criteria.md based on exact input requirements
-3. Write verify.py (RED) with fault-proofs
-4. Generate TTS audio for all lines
-5. Acquire/Generate SFX and BGM
-6. Zip into audio.zip with manifest.json
+1. Inspect the script structure and available voice APIs/TTS scripts in capabilities.md.
+2. Draft a script to generate the TTS audio.
+3. Fetch or generate royalty-free SFX and BGM (using APIs or built-ins).
+4. Combine, package, and verify.
 
 ## Node Tree
-- C1: audio.zip exists (pending)
-- C2: manifest matches script (pending)
+- Root Goal: Audio Production
+  - C1: audio.zip exists [red]
+  - C2: manifest.json holds correct mappings [red]
+  - C3: dialogue audio files are complete and valid [red]
+  - C4: distinct character voices [red]
+  - C5: BGM and SFX are provided and integrated [red]
