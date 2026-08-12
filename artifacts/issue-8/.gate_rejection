@@ -1,0 +1,6 @@
+rejection 1/5:
+verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
+  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-work\issue-8\workspace\verify.py", line 42
+    "Evaluate this 10s video slice against the spec:
+    ^
+SyntaxError: unterminated string literal (detected at line 42)
