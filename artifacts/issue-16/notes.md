@@ -1,21 +1,17 @@
 # Plan
-1. Understand spec and characters.
-2. Write criteria.md and verify.py.
-3. Generate audio files for each shot using TTS (OpenAI if available, else gTTS with pitch/speed modifications).
-4. Trim silences using pydub.
-5. Generate/find SFX/Music.
-6. Create timeline.json.
-7. Package to audio.zip.
-8. Refine audio quality based on judge feedback.
+1. Write criteria.md [DONE]
+2. Write verify.py (RED)
+3. Generate TTS audio for all dialogue lines using available tools, trim silence.
+4. Generate/fetch SFX and Music.
+5. Create timeline.json mapping script lines to audio files.
+6. Zip everything into audio.zip.
+7. Verify and refine.
 
 # Node Tree
-- C1 (audio.zip exists): red (turn 14)
-- C2 (timeline.json covers all shots): red (turn 14)
-- C3 (all referenced audio files exist): red (turn 14)
-- C4 (silences trimmed): red (turn 14)
-- C5 (SFX included): red (turn 14)
-- C6 (distinct comedic voices): red (turn 14)
-
-# Facts
-F1 | TTS capabilities: OpenAI and gTTS are installed (turn 4).
-F2 | 38 script items (turn 13).
+- C1 (audio.zip exists): RED
+- C2 (timeline.json valid): RED
+- C3 (referenced audio exists): RED
+- C4 (dialogue mapped): RED
+- C5 (distinct voices): RED
+- C6 (trimmed dead air): RED
+- C7 (SFX/music present): RED

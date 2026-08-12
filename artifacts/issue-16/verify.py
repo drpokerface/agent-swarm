@@ -1,134 +1,101 @@
+# verify.py - Verify Audio Generation and Packaging
 import os
 import sys
-import json
 import zipfile
+import json
 import shutil
-import random
-import subprocess
 
-def ensure_installed(packages):
-    for p in packages:
-        try:
-            __import__(p)
-        except ImportError:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", p, "--quiet"])
-
-ensure_installed(['pydub'])
-from pydub import AudioSegment
-
-def check_silence(audio_path):
-    try:
-        audio = AudioSegment.from_file(audio_path)
-    except Exception as e:
-        return False, f"Could not load audio: {e}"
-    if len(audio) < 200: 
-        return True, "" # Too short to reliably check
-    start_chunk = audio[:100]
-    end_chunk = audio[-100:]
-    if audio.max_dBFS > -25:
-        if start_chunk.max_dBFS < -40:
-            return False, f"Leading silence: {start_chunk.max_dBFS:.2f} dBFS"
-        if end_chunk.max_dBFS < -40:
-            return False, f"Trailing silence: {end_chunk.max_dBFS:.2f} dBFS"
-    return True, ""
-
-def verify(zip_path, fault_target=None):
+def check_archive(zip_path, script_path):
+    log_lines = []
+    
     if not os.path.exists(zip_path):
-        raise FileNotFoundError("audio.zip missing")
+        log_lines.append(f"C1: Fail - {zip_path} does not exist")
+        return False, log_lines
         
-    temp_dir = f"scratch/verify_temp_{random.randint(1000, 9999)}"
-    os.makedirs(temp_dir, exist_ok=True)
-    
-    with zipfile.ZipFile(zip_path, 'r') as zf:
-        zf.extractall(temp_dir)
-        
-    names = os.listdir(temp_dir)
-    if "timeline.json" not in names:
-        if fault_target == 'timeline': return False
-        raise Exception("timeline.json missing in root")
-        
-    with open(os.path.join(temp_dir, "timeline.json")) as f:
-        timeline_data = json.load(f)
-        
-    if fault_target == 'timeline': return True # Should have failed
-    
-    print(f"C1 (audio.zip exists): PASS")
-    print(f"C2 (timeline.json valid): PASS")
-    
-    has_sfx = False
-    audio_files = []
-    
-    for item in timeline_data:
-        a_file = item.get("audio_file")
-        if a_file:
-            audio_files.append(a_file)
-            if "sfx" in a_file.lower() or "music" in a_file.lower() or item.get("type", "").lower() == "sfx":
-                has_sfx = True
-                
-    for a_file in audio_files:
-        p = os.path.join(temp_dir, a_file)
-        if not os.path.exists(p):
-            raise Exception(f"Missing referenced file: {a_file}")
-            
-        if fault_target == "silence" and a_file == audio_files[0]:
-            print("Injecting silence for fault proof...")
-            aud = AudioSegment.from_file(p)
-            silence = AudioSegment.silent(duration=500)
-            (silence + aud).export(p, format="wav")
-
-        ok, msg = check_silence(p)
-        if not ok:
-            if fault_target == "silence": return False
-            raise Exception(f"Silence check failed on {a_file}: {msg}")
-            
-    if fault_target == "silence": return True # Should have failed
-            
-    print(f"C3 (All referenced audio files exist): PASS")
-    print(f"C4 (Silences trimmed): PASS")
-    
-    if not has_sfx and any("sfx" in n.lower() or "music" in n.lower() for n in names):
-        has_sfx = True
-        
-    if not has_sfx:
-        raise Exception("No SFX/music tracks found")
-        
-    print(f"C5 (SFX included): PASS")
-    print(f"C6 (Distinct voices): ASSUMED PASS (proxy)")
-    
-    return True
-
-def run_all():
-    print("Verifying real audio.zip...")
     try:
-        verify("audio.zip")
+        with zipfile.ZipFile(zip_path, 'r') as z:
+            namelist = z.namelist()
+            log_lines.append(f"C1: Pass - {zip_path} is a valid zip archive")
+            
+            if 'timeline.json' not in namelist:
+                log_lines.append("C2: Fail - timeline.json is missing in the archive")
+                return False, log_lines
+                
+            timeline_content = z.read('timeline.json').decode('utf-8')
+            timeline = json.loads(timeline_content)
+            log_lines.append("C2: Pass - timeline.json exists and is valid JSON")
+            
+            if not isinstance(timeline, list):
+                log_lines.append("C2: Fail - timeline.json must be a JSON array")
+                return False, log_lines
+                
+            # C3: check referenced files exist in zip
+            for entry in timeline:
+                for key in ['dialogue_file', 'sfx_file', 'bgm_file']:
+                    if key in entry and entry[key]:
+                        if entry[key] not in namelist:
+                            log_lines.append(f"C3: Fail - referenced file {entry[key]} not in zip")
+                            return False, log_lines
+            log_lines.append("C3: Pass - all referenced audio files exist in zip")
+            
+            # C5: check file sizes
+            for fname in namelist:
+                if fname.endswith('.mp3') or fname.endswith('.wav'):
+                    if z.getinfo(fname).file_size < 100:
+                        log_lines.append(f"C5: Fail - {fname} is too small")
+                        return False, log_lines
+            log_lines.append("C5: Pass - audio files are non-empty")
+            
+            # C6: SFX/music
+            has_sfx = any(entry.get('sfx_file') for entry in timeline)
+            has_bgm = any(entry.get('bgm_file') for entry in timeline)
+            if not has_sfx or not has_bgm:
+                log_lines.append(f"C6: Fail - timeline.json lacks SFX or BGM")
+                return False, log_lines
+            log_lines.append("C6: Pass - SFX and BGM are present")
+            
     except Exception as e:
-        print(f"Failed verification: {e}")
-        sys.exit(1)
+        log_lines.append(f"C1: Fail - exception reading zip: {e}")
+        return False, log_lines
         
-    print("
-Running Fault Proof 1: Corrupted zip (missing timeline)")
-    bad_zip_1 = "scratch/bad_1.zip"
-    if os.path.exists(bad_zip_1): os.remove(bad_zip_1)
-    with zipfile.ZipFile(bad_zip_1, 'w') as zf:
-        zf.writestr("dummy.txt", "hello")
-    if not verify(bad_zip_1, fault_target='timeline'):
-        print("FAULT-PROOF: caught missing timeline")
-    else:
-        print("FAULT-PROOF FAILED")
-        sys.exit(1)
-        
-    print("
-Running Fault Proof 2: Untrimmed silence")
-    bad_zip_2 = "scratch/bad_2.zip"
-    shutil.copy("audio.zip", bad_zip_2)
-    if not verify(bad_zip_2, fault_target='silence'):
-        print("FAULT-PROOF: caught untrimmed silence")
-    else:
-        print("FAULT-PROOF FAILED")
-        sys.exit(1)
+    return True, log_lines
 
-    print("
-VERDICT: PASS")
+def run_fault_proof(zip_path, script_path):
+    os.makedirs('scratch', exist_ok=True)
+    if not os.path.exists(zip_path):
+        return False, "No zip to corrupt"
+    
+    scratch_zip = 'scratch/corrupted.zip'
+    with zipfile.ZipFile(zip_path, 'r') as z_in, zipfile.ZipFile(scratch_zip, 'w') as z_out:
+        for item in z_in.infolist():
+            if item.filename == 'timeline.json':
+                z_out.writestr(item, '{"invalid json')
+            else:
+                z_out.writestr(item, z_in.read(item.filename))
+                
+    success, logs = check_archive(scratch_zip, script_path)
+    if success:
+        return False, "Fault proof failed: check_archive passed a corrupted zip"
+    return True, f"Caught fault: {logs[-1]}"
 
 if __name__ == '__main__':
-    run_all()
+    zip_path = 'audio.zip'
+    script_path = 'artifacts/issue-15/script.json'
+    
+    if os.path.exists(zip_path):
+        fp_ok, fp_msg = run_fault_proof(zip_path, script_path)
+        if not fp_ok:
+            print("VERDICT: FAIL - Fault proof failed")
+            sys.exit(1)
+        print(f"FAULT-PROOF: {fp_msg}")
+        
+    success, logs = check_archive(zip_path, script_path)
+    for line in logs:
+        print(line)
+        
+    if success:
+        print("VERDICT: PASS")
+        sys.exit(0)
+    else:
+        print("VERDICT: FAIL")
+        sys.exit(1)

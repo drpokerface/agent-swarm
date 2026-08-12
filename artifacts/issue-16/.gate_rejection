@@ -1,6 +1,9 @@
 rejection 1/5:
 verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-work\issue-16\workspace\verify.py", line 108
-    print("
-          ^
-SyntaxError: unterminated string literal (detected at line 108)
+FAULT-PROOF: Caught fault: C1: Fail - exception reading zip: Unterminated string starting at: line 1 column 2 (char 1)
+C1: Pass - audio.zip is a valid zip archive
+C2: Pass - timeline.json exists and is valid JSON
+C3: Pass - all referenced audio files exist in zip
+C5: Pass - audio files are non-empty
+C6: Fail - timeline.json lacks SFX or BGM
+VERDICT: FAIL
