@@ -1,10 +1,11 @@
 ## Interpretation
-- We need backgrounds for all 38 scenes, matching 1280x720, named `backgrounds/bg_01.png` to `bg_38.png`.
-- We need transparent characters (Brody, Karen, Sybil), each with `talking` and `silent` states, named `characters/{name}_{state}.png`.
-- The style must be a consistent 2D adult animation style.
+The goal requires generating visual assets for an animated comedy short based on `script.json`.
+1. Backgrounds: Every unique background described in `script.json` must have a corresponding 1280x720 PNG image.
+2. Characters: Every unique character state (pose) described in `script.json` must have a corresponding transparent PNG image, with both "mouth_open" and "mouth_closed" variations.
+3. Packaging: All images must be packaged into `visuals.zip`.
+4. Style: Consistent irreverent, satirical adult-animation style (like Family Guy / South Park).
 
 ## Claims
-1. **Valid Archive**: `visuals.zip` exists and is a valid zip.
-2. **Backgrounds**: `visuals.zip` has 38 1280x720 PNGs in `backgrounds/`.
-3. **Characters**: `visuals.zip` has transparent PNGs for Brody, Karen, Sybil in `characters/` (talking/silent).
-4. **Style**: Median style score from 3 blind judge evaluations >= 7/10.
+- C1: `visuals.zip` exists in the workspace.
+- C2: `visuals.zip` contains a 1280x720 `.png` file for every unique background in `script.json`.
+- C3: `visuals.zip` contains transparent `.png` files for every unique character state in `script.json` (specifically `_mouth_open.png` and `_mouth_closed.png` for each).
