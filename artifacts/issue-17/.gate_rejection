@@ -1,0 +1,7 @@
+rejection 1/5:
+verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
+FAULT-PROOF: Caught missing file characters/karen/staring_at_her_vibrating_smartphone_in_absolute_ho_open.png correctly
+C1: ZIP exists - PASS (contains 97 files)
+C2: Backgrounds present and sized 1280x720 - PASS (23 backgrounds)
+FAIL: Missing characters/brody/running_out_the_door__sybil__floating_after_him_s_closed.png
+VERDICT: FAIL
