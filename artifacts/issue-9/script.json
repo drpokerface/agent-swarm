@@ -1,0 +1,122 @@
+{
+  "scenes": [
+    {
+      "duration_seconds": 5,
+      "dialogue": [
+        {
+          "character": "Boss",
+          "voice": "Male 1",
+          "line": "Welcome to HellCorp, Greg. We just acquired the police, the internet, and your soul.",
+          "visual_prompt": "Boss in a fiery office, wearing a suit and holding a pitchfork.",
+          "tag": "hook"
+        }
+      ]
+    },
+    {
+      "duration_seconds": 50,
+      "dialogue": [
+        {
+          "character": "Greg",
+          "voice": "Male 2",
+          "line": "Wait, my soul? I thought this was just a data entry job! I have a family! And a golden retriever! You can't just take my soul, it's not even in my contract!",
+          "visual_prompt": "Greg looking terrified, holding a stapler defensively.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Boss",
+          "voice": "Male 1",
+          "line": "Oh, Greg. Section 4, paragraph 2. 'Employee surrenders all spiritual assets.' We've already monetized your dreams. They're being sold as NFTs to depressed crypto bros.",
+          "visual_prompt": "Boss holding a glowing red contract that is actively dripping lava.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "HR Rep",
+          "voice": "Female 1",
+          "line": "Plus, your golden retriever was reassigned to our fetching department. He's a middle manager now. He makes more than you.",
+          "visual_prompt": "HR Rep adjusting her cat-eye glasses, filing her nails with a miniature bone saw.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Greg",
+          "voice": "Male 2",
+          "line": "This is a nightmare! I'm calling the police!",
+          "visual_prompt": "Greg frantically pulling out his cell phone.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Boss",
+          "voice": "Male 1",
+          "line": "I literally just told you we acquired them. They are currently doing a team-building exercise in the magma chamber.",
+          "visual_prompt": "Boss sipping from a mug that says 'World's Best Demon'.",
+          "tag": "dialogue"
+        }
+      ]
+    },
+    {
+      "duration_seconds": 45,
+      "dialogue": [
+        {
+          "character": "Greg",
+          "voice": "Male 2",
+          "line": "Fine! Then I'll complain on the internet! I'll cancel you! I'll write a strongly worded review on Glassdoor!",
+          "visual_prompt": "Greg aggressively typing on his phone, veins popping on his forehead.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Modem",
+          "voice": "Robot",
+          "line": "Error. Glassdoor is now owned by HellCorp. Your review has been translated into agonizing pain.",
+          "visual_prompt": "A retro computer monitor nearby flashes red with an evil skull face.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "HR Rep",
+          "voice": "Female 1",
+          "line": "And we docked your pay for personal phone use during company hours. You now owe us three thousand dollars.",
+          "visual_prompt": "HR Rep typing on a clipboard that is literally on fire.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Greg",
+          "voice": "Male 2",
+          "line": "I don't have three thousand dollars! I have crippling debt and a coupon for a half-off sandwich!",
+          "visual_prompt": "Greg holding up a sad, crinkled little sandwich coupon.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Boss",
+          "voice": "Male 1",
+          "line": "We'll take the coupon. And your pancreas. It's company policy for underperforming assets.",
+          "visual_prompt": "Boss smiling evilly, revealing shark-like teeth.",
+          "tag": "dialogue"
+        }
+      ]
+    },
+    {
+      "duration_seconds": 20,
+      "dialogue": [
+        {
+          "character": "Greg",
+          "voice": "Male 2",
+          "line": "You monsters! You can't just harvest my organs! That's illegal in at least three dimensions!",
+          "visual_prompt": "Greg backing away, sweating profusely as shadows loom over him.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "Boss",
+          "voice": "Male 1",
+          "line": "Greg, please. We're not monsters. We're a family. A family that aggressively offboards you.",
+          "visual_prompt": "Boss putting a deceptively comforting hand on Greg's trembling shoulder.",
+          "tag": "dialogue"
+        },
+        {
+          "character": "HR Rep",
+          "voice": "Female 1",
+          "line": "So, about that pancreas... should I get the bone saw or the melon baller?",
+          "visual_prompt": "HR Rep holding up a rusted bone saw in one hand and a shiny melon baller in the other.",
+          "tag": "punchline"
+        }
+      ]
+    }
+  ]
+}
