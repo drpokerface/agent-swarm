@@ -1,0 +1,138 @@
+{
+    "scenes": [
+        {
+            "background_prompt": "A modern startup office breakroom. Clean, minimalist, beanbag chairs. A poster says 'DISRUPT'.",
+            "dialogue": [
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Bro, I'm telling you, our new app is going to revolutionize the way people breathe. It's called 'Oxy+', a SaaS platform for actual air. We're disrupting the atmosphere.",
+                    "visual_prompt": "Chad leans against the espresso machine, holding a mason jar of green liquid. He looks very smug."
+                },
+                {
+                    "character": "Greg",
+                    "voice": "Anxious, tired, deadpan.",
+                    "line": "Chad, that's just a subscription service for not suffocating. Isn't that technically extortion? You've paywalled the troposphere.",
+                    "visual_prompt": "Greg rubs his temples, staring at his laptop with dark circles under his eyes."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Words like 'extortion' are for people who don't understand freemium models. Everyone gets the first 100 breaths free. After that, it's just $9.99 a month for Premium Oxygen.",
+                    "visual_prompt": "Chad gestures enthusiastically, drawing an imaginary graph in the air."
+                },
+                {
+                    "character": "Greg",
+                    "voice": "Anxious, tired, deadpan.",
+                    "line": "People breathe twenty thousand times a day, Chad. They'll run out of free breaths in ten minutes.",
+                    "visual_prompt": "Greg stares blankly, utterly defeated."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Exactly! High conversion rate. We monetize the biological necessity.",
+                    "visual_prompt": "Chad points finger guns at Greg, winking."
+                }
+            ]
+        },
+        {
+            "background_prompt": "A busy city street. A mix of wealthy people and struggling people.",
+            "dialogue": [
+                {
+                    "character": "Announcer",
+                    "voice": "Boomy, enthusiastic voiceover.",
+                    "line": "Tired of breathing poor-people air? Upgrade to Oxy+ Elite! Now with hints of lavender and exclusivity!",
+                    "visual_prompt": "A slick businessman takes a deep breath with a glowing 'Oxy+' halo around his head."
+                },
+                {
+                    "character": "Homeless Man",
+                    "voice": "Gravelly, desperate.",
+                    "line": "Can... can you spare a breath?",
+                    "visual_prompt": "A man turning slightly blue reaches out."
+                },
+                {
+                    "character": "Businessman",
+                    "voice": "Snobby, dismissive.",
+                    "line": "Sorry, I only have Apple Pay.",
+                    "visual_prompt": "The businessman taps his smartwatch and walks away briskly."
+                }
+            ]
+        },
+        {
+            "background_prompt": "Back in the modern startup office breakroom.",
+            "dialogue": [
+                {
+                    "character": "Greg",
+                    "voice": "Anxious, tired, deadpan.",
+                    "line": "We're literally suffocating the poor. My mother tells her friends I'm dead.",
+                    "visual_prompt": "Greg has his head in his hands on the table."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "She's just mourning the un-optimized you. We're gamifying survival! Plus, our AI algorithm predicts the lower classes will evolve gills within three generations anyway. We're accelerating human evolution!",
+                    "visual_prompt": "Chad takes another sip of his green liquid, completely unbothered."
+                },
+                {
+                    "character": "Greg",
+                    "voice": "Anxious, tired, deadpan.",
+                    "line": "Gills don't work on land! We live in Denver! Do you hear yourself? I spent six years at MIT, Chad, and now I'm actively committing crimes against humanity.",
+                    "visual_prompt": "Greg stands up, knocking his chair backwards in frustration."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Bad press is just good press in a trench coat, Greg. You just need to reframe this. If they want to keep enjoying oxygen, they just need to watch two unskippable ads for our sponsor, Raid Shadow Legends.",
+                    "visual_prompt": "Chad pulls out his phone to check his crypto portfolio."
+                },
+                {
+                    "character": "Greg",
+                    "voice": "Anxious, tired, deadpan.",
+                    "line": "We are the villains in a dystopian YA novel! I can't do this anymore. I'm deleting the source code.",
+                    "visual_prompt": "Greg frantically types on his laptop."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Whoa, chill out man! Take a deep breath! ... Oh, wait.",
+                    "visual_prompt": "Chad looks at his phone and taps a button with a sinister smile."
+                }
+            ]
+        },
+        {
+            "background_prompt": "The startup breakroom. Greg is clutching his throat.",
+            "dialogue": [
+                {
+                    "character": "Greg",
+                    "voice": "Gasping, choking.",
+                    "line": "What... did you do?",
+                    "visual_prompt": "Greg turns blue, grasping at his neck."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "You forgot to renew your employee discount, Greg. Your account has been suspended for violating our Terms of Service.",
+                    "visual_prompt": "Chad stands over him, totally apathetic."
+                },
+                {
+                    "character": "Greg",
+                    "voice": "Gasping, fading.",
+                    "line": "You... monster...",
+                    "visual_prompt": "Greg collapses onto the beanbag chair, out cold."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Don't worry, man. Just watch this 30-second ad for DraftKings and you'll get a 5 percent oxygen boost.",
+                    "visual_prompt": "Chad holds his phone in front of Greg's unconscious face."
+                },
+                {
+                    "character": "Chad",
+                    "voice": "Tech bro, overconfident, slightly nasal.",
+                    "line": "Engagement is through the roof today.",
+                    "visual_prompt": "Chad turns to the camera, gives a thumbs up, and takes a final loud slurp of his green drink."
+                }
+            ]
+        }
+    ]
+}
