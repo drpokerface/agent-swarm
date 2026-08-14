@@ -3,9 +3,9 @@ verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDIC
 FAULT-PROOF: Testing verification routine with corrupt dummy file.
 FAULT-PROOF SUCCESS: Corrupt dummy file correctly failed parse check.
 C1: PASS - final.mp4 exists
-C2: PASS - Duration is 139.547657s
+C2: PASS - Duration is 139.095s
 C4: PASS - AV streams present
 C3: PASS - Resolution is 1280x720
 C5: PASS - Video is non-degenerate
-C6: FAIL - Perception score 3 < 7. Reasoning: The submission is not a finished animated short. It consists of a voice-over script read over static, flat-colored backgrounds (gray and green) with written scene directions. It lacks actual character animation, visual cohesion, background music, sound effects, and active frames, rendering it an incomplete pre-production animatic or script read rather than a fully realized animation.
+C6: FAIL - Perception score 3 < 7. Reasoning: While the script features a humorous, satirical premise targeting modern internet culture (including podcasts, crypto, and wholesome cat videos), the technical execution is extremely basic. The video lacks actual animation, relying on solid gray and green backgrounds with static text descriptions instead of active, rendered frames. Additionally, there is no background music or sound effects, and the character dialogue is delivered via highly repetitive, monotonous text-to-speech voices that occasionally overlap, hindering proper comedic timing and cohesion.
 VERDICT: FAIL
