@@ -1,9 +1,11 @@
+# criteria.md - Criteria for Final Integration and Polish
 ## Interpretation
-The goal is to assemble `final.mp4` from assets and the script, ensuring it meets mechanical constraints (1280x720, audio/video streams, ~120s) and subjective quality (cohesive comedy short, score >= 7/10).
+Deliverable is a ~120s MP4 (1280x720) comedy short. It must have AV streams, not be degenerate, and pass an AI perception check for style and quality.
 
 ## Claims
-C1: `final.mp4` exists on disk.
-C2: Resolution of the video stream is exactly 1280x720.
-C3: `final.mp4` contains at least one video stream and at least one audio stream.
-C4: Duration of `final.mp4` is between 100 and 140 seconds.
-C5: Subjective quality score is >= 7, judged by a fresh model perception call using the constitution rubric.
+C1: `final.mp4` exists.
+C2: Duration is between 110s and 140s.
+C3: Resolution is exactly 1280x720.
+C4: Contains video and audio streams.
+C5: Audio is not degenerate/silent.
+C6: Scores >= 7 on subjective AI judge rubric.
