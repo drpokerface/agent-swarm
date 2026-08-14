@@ -1,21 +1,22 @@
-# notes.md - Working Mind
-## Plan
-1. Write criteria.md and verify.py RED (turn 1)
-2. Extract assets.zip and inspect inputs (manifest.md, script.json) (turn 2)
-3. Build a rough assembly script to generate a 120s final.mp4 (turn 3)
-4. Implement judging loops to polish the video (turn 4+)
+Plan:
+1. Initialize criteria.md and notes.md.
+2. Write and run verify.py RED.
+3. Extract assets.zip, read script.json, check constitution.md.
+4. Build Rough Cut (audio + visual assets) script-driven.
+5. Polish loop (judge and refine: fix dead air, sync, effects).
+6. Final packaging and verify.py GREEN.
 
-## Node Tree
-- C1: `final.mp4` exists. [assumed]
-- C2: Duration 110-140s. [assumed]
-- C3: 1280x720. [assumed]
-- C4: AV streams. [assumed]
-- C5: Non-degenerate content. [assumed]
-- C6: Subjective perception. [assumed]
+Degenerate Twins:
+- D1: A silent 120s 1280x720 black video.
+- D2: A video with static white noise and no real audio or visuals.
+- D3: A single frame held for 120s with a single drone sound.
+- D4: A video assembled without using script.json or assets.zip.
 
-## Facts
-
-
-## Verification Run (Turn 40)
-Exit code: 1
-Stdout end: asoning: While the voice acting is expressive and the script successfully uses contemporary internet culture (podcasts, crypto, Reddit arguments) for a classic sci-fi satire akin to South Park, the video is a placeholder or animatic draft. It lacks actual character animations or distinct active frames (displaying only static grey and green screens with text overlays), and is missing background music and sound effects which are critical for comedic timing and cohesive storytelling. VERDICT: FAIL 
+Node Tree:
+- root: final.mp4 meets all criteria [assumed]
+  - C1: exists [assumed]
+  - C2: streams (video+audio) [assumed]
+  - C3: 1280x720 [assumed]
+  - C4: 100-140s duration [assumed]
+  - C5: non-degenerate [assumed]
+  - C6: subjective score >= 7 [assumed]

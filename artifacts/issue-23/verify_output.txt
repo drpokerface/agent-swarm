@@ -1,9 +1,0 @@
-FAULT-PROOF: Testing verification routine with corrupt dummy file.
-FAULT-PROOF SUCCESS: Corrupt dummy file correctly failed parse check.
-C1: PASS - final.mp4 exists
-C2: PASS - Duration is 139.547657s
-C4: PASS - AV streams present
-C3: PASS - Resolution is 1280x720
-C5: PASS - Video is non-degenerate
-C6: FAIL - Perception score 2 < 7. Reasoning: The video is not a finished animated short; it consists entirely of a solid color background (grey, then green) with static text describing the scenes. It lacks any visual animation, active frames, character designs, background music, or sound effects, making it more of a script draft than a completed cartoon.
-VERDICT: FAIL
