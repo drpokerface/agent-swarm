@@ -1,10 +1,16 @@
 EXIT CODE: 1
 STDOUT:
-C1: tracer_slice.mp4 exists, 1280x720, 5-15s, audio -> True
-C2: capabilities.md exists and contains findings -> True
-C3: manifest.md exists and lists files -> True
+EXPECT: verify.py completes C1-C5 and outputs verdicts
+Video stats: w=1280, h=720, d=8.85, has_aud=True
+C1: tracer_slice.mp4 exists, 1280x720, 5-15s, has audio -> True
+C2: capabilities.md exists and accurate -> True
+C3: manifest.md exists and valid -> True
+Processing video in Gemini...
+Uploading tracer_slice.mp4 to Gemini...
+Waiting for processing...
 C4: Non-degenerate -> True
-C5: Perceptual score >= 7 -> False (Score: 6)
+C5: Perceptual score >= 7 -> True (Score: 8.5, Reason: The video features a fast-paced, irreverent comedic style with well-synced audio and animated characters, aligning perfectly with adult animation criteria.)
+Running fault-proof check...
 FAULT-PROOF: Corruption detected -> False
 VERDICT: FAIL
 
