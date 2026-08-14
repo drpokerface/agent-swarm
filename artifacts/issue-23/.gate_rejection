@@ -1,12 +1,6 @@
 rejection 1/5:
 verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-Starting verification...
-C1: True
-C2: 1280x720
-C3: Video:True Audio:True
-C4: 143.18s
-C5: Score: 8.5 - The short has excellent comedic timing, a strong hook within the first few seconds, and zero dead air. The jokes targeting internet subcultures, podcasts, and crypto are sharp and land well, wrapping up with a highly satisfying payoff at the end.
-
---- FAULT PROOF ---
-FAULT-PROOF: Tested 640x480 1s video with no audio. C2 caught: 640x480 | C3 caught: Video:True Audio:False | C4 caught: 1.00s
-VERDICT: FAIL
+  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-work\issue-23\workspace\verify.py", line 65
+    prompt = "Here is the rubric:
+             ^
+SyntaxError: unterminated string literal (detected at line 65)

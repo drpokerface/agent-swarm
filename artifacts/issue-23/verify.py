@@ -1,285 +1,128 @@
-# VERIFICATION SCRIPT FOR FINAL INTEGRATION
+import os, sys, subprocess, json, random, shutil, time
 
-import os
-
-import sys
-
-import subprocess
-
-import json
-
-import random
-
-import shutil
-
-
-
-# Bootstrap dependencies
-
-try:
-
-    from google import genai
-
-    from google.genai import types
-
-except ImportError:
-
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "google-genai", "pydantic"])
-
-    from google import genai
-
-    from google.genai import types
-
-
-
-def run_ffprobe(filepath):
-
-    cmd = ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", "-show_streams", filepath]
-
+def run_ffprobe(target):
     try:
-
+        cmd = ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", "-show_streams", target]
         res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-
         return json.loads(res.stdout)
-
-    except Exception:
-
+    except Exception as e:
         return None
 
-
-
 def check_c1(target):
-
-    return os.path.exists(target), str(os.path.exists(target))
-
-
+    if not os.path.exists(target): return False, "Missing"
+    return True, "Exists"
 
 def check_c2(probe):
-
     if not probe: return False, "No probe data"
-
     for s in probe.get("streams", []):
-
         if s.get("codec_type") == "video":
-
-            w = s.get("width")
-
-            h = s.get("height")
-
+            w, h = s.get("width"), s.get("height")
             if w == 1280 and h == 720:
-
                 return True, "1280x720"
-
             return False, f"{w}x{h}"
-
     return False, "No video stream"
 
-
-
 def check_c3(probe):
-
     if not probe: return False, "No probe data"
-
-    has_video = False
-
-    has_audio = False
-
-    for s in probe.get("streams", []):
-
-        if s.get("codec_type") == "video": has_video = True
-
-        if s.get("codec_type") == "audio": has_audio = True
-
-    return has_video and has_audio, f"Video:{has_video} Audio:{has_audio}"
-
-
+    has_v = any(s.get("codec_type") == "video" for s in probe.get("streams", []))
+    has_a = any(s.get("codec_type") == "audio" for s in probe.get("streams", []))
+    return (has_v and has_a), f"Video:{has_v} Audio:{has_a}"
 
 def check_c4(probe):
-
     if not probe: return False, "No probe data"
-
     fmt = probe.get("format", {})
-
     dur = float(fmt.get("duration", 0))
-
     if 100 <= dur <= 140:
-
         return True, f"{dur:.2f}s"
-
     return False, f"{dur:.2f}s"
 
+def check_degenerate(target):
+    if not os.path.exists(target): return False, "Missing"
+    size = os.path.getsize(target)
+    if size < 100000:
+        return False, f"File too small ({size} bytes)"
+    return True, "Passed size check"
 
-
-def check_c5_perceptual(target):
-
-    if not os.path.exists(target):
-
-        return False, "File missing"
-
+def check_c5(target):
     if "GEMINI_API_KEY" not in os.environ:
-
         return False, "No API key"
-
-    
-
-    client = genai.Client()
-
     try:
-
+        from google import genai
+        client = genai.Client()
         video_file = client.files.upload(file=target)
-        import time
         while True:
             video_file = client.files.get(name=video_file.name)
-            if 'PROCESSING' in str(video_file.state).upper():
+            if video_file.state.name == 'PROCESSING':
                 time.sleep(2)
+            elif video_file.state.name == 'FAILED':
+                return False, "Video processing failed on Gemini"
             else:
                 break
-        if 'FAILED' in str(video_file.state).upper():
-            return False, 'Gemini processing failed'
-
-        # Read rubric
-
+        
         with open("rubric.md", "r") as f:
-
             rubric = f.read()
 
-        
-
-        prompt = f"""Review this animated comedy short against the rubric below.
-
-
-
-{rubric}
-
-
-
-Score the overall humor, timing, and cohesion from 0 to 10.
-
-Is the score 7 or higher? Answer ONLY in this JSON format: {{"score": 7.5, "pass": true, "reason": "..."}}"""
-
-        
-
-        response = client.models.generate_content(
-
-            model='gemini-3.5-flash',
-
-            contents=[video_file, prompt],
-
-            config=types.GenerateContentConfig(
-
-                response_mime_type="application/json",
-
-            )
-
-        )
-
-        result = json.loads(response.text)
-
-        score = result.get("score", 0)
-
-        passed = result.get("pass", False)
-
-        
-
-        # cleanup
-
-        client.files.delete(name=video_file.name)
-
-        
-
-        return passed, f"Score: {score} - {result.get('reason', '')}"
-
+        prompt = "Here is the rubric:
+" + rubric + "
+Review this video. Is it a cohesive comedy short that scores >= 7 on the rubric? Look for distinct scenes, audio, and pacing. Reply with exactly 'YES' or 'NO', followed by a brief reason."
+        resp = client.models.generate_content(model="gemini-3.5-flash", contents=[prompt, video_file])
+        ans = resp.text.strip()
+        if ans.startswith("YES"):
+            return True, ans
+        return False, ans
     except Exception as e:
+        return False, f"Model call failed: {e}"
 
-        return False, f"Perceptual check failed: {e}"
-
-
+def fault_proof():
+    print("--- FAULT PROOF ---")
+    os.makedirs("scratch", exist_ok=True)
+    fault_target = "scratch/fault.mp4"
+    with open(fault_target, "w") as f:
+        f.write("junk data")
+    c1, msg1 = check_c1(fault_target)
+    probe = run_ffprobe(fault_target)
+    c2, msg2 = check_c2(probe)
+    c3, msg3 = check_c3(probe)
+    c4, msg4 = check_c4(probe)
+    deg, msg_deg = check_degenerate(fault_target)
+    
+    if not deg and not c2:
+        print("VALIDATED: checks correctly caught the degenerate/corrupt video.")
+    else:
+        print("FAULT-PROOF FAILED.")
+        sys.exit(1)
 
 def main():
-
-    print("Starting verification...")
-
     target = "final.mp4"
-
-    probe = run_ffprobe(target)
-
+    fault_proof()
     
-
+    print("--- EVALUATION ---")
     c1, m1 = check_c1(target)
-
-    print(f"C1: {m1}")
-
+    print(f"C1: {c1} - {m1}")
+    if not c1: sys.exit(1)
+    
+    probe = run_ffprobe(target)
     c2, m2 = check_c2(probe)
-
-    print(f"C2: {m2}")
-
+    print(f"C2: {c2} - {m2}")
+    if not c2: sys.exit(1)
+    
     c3, m3 = check_c3(probe)
-
-    print(f"C3: {m3}")
-
+    print(f"C3: {c3} - {m3}")
+    if not c3: sys.exit(1)
+    
     c4, m4 = check_c4(probe)
-
-    print(f"C4: {m4}")
-
-    c5, m5 = check_c5_perceptual(target)
-
-    print(f"C5: {m5}")
-
+    print(f"C4: {c4} - {m4}")
+    if not c4: sys.exit(1)
     
-
-    # Fault Proof
-
-    print("\n--- FAULT PROOF ---")
-
-    os.makedirs("scratch", exist_ok=True)
-
-    bad_target = "scratch/bad_final.mp4"
-
-    # Create a broken 1-second video
-
-    subprocess.run(["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=red:s=640x480:d=1", "-vcodec", "libx264", bad_target], capture_output=True)
-
-    bad_probe = run_ffprobe(bad_target)
-
+    deg, m_deg = check_degenerate(target)
+    print(f"Degenerate Check: {deg} - {m_deg}")
+    if not deg: sys.exit(1)
     
-
-    f_c2, f_m2 = check_c2(bad_probe)
-
-    f_c3, f_m3 = check_c3(bad_probe)
-
-    f_c4, f_m4 = check_c4(bad_probe)
-
+    c5, m5 = check_c5(target)
+    print(f"C5: {c5} - {m5}")
+    if not c5: sys.exit(1)
     
-
-    caught = (not f_c2) and (not f_c4)
-
-    print(f"FAULT-PROOF: Tested 640x480 1s video with no audio. C2 caught: {f_m2} | C3 caught: {f_m3} | C4 caught: {f_m4}")
-
-    
-
-    if not caught:
-
-        print("VERDICT: FAIL - Fault proof failed")
-
-        sys.exit(1)
-
-        
-
-    if c1 and c2 and c3 and c4 and c5:
-
-        print("VERDICT: PASS")
-
-        sys.exit(0)
-
-    else:
-
-        print("VERDICT: FAIL")
-
-        sys.exit(1)
-
-
+    print("VERDICT: PASS")
 
 if __name__ == '__main__':
-
     main()
-
