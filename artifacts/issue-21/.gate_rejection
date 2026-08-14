@@ -1,0 +1,6 @@
+rejection 1/5:
+a hostile audit rejected the claim: 1. Hollow Manifest Check (Integration Contract violated): `verify.py` only checks `os.path.exists(manifest_path)`. It never parses `manifest.md` to ensure it contains filenames, formats, a sample, or describes the JSON schema as required. An empty `manifest.md` passes. 
+2. Missing Schema/TTS Validation: The spec strictly requires `script.json` scenes to include TTS voice profiles. `verify.py` only verifies the parsed JSON is a list, and the LLM prompt only asks about dialogue and visuals; `tts_voice_profiles` is completely unverified. 
+3. Trivial Cutaway Proxy: The cutaway check simply counts the substring `'cutaway'` in the JSON dump. A lazy author could bypass this by having a character simply say the word 'cutaway' twice, without providing actual cutaway scenes. 
+4. Missing Constraint Verification: The spec mandates a 'hook in the first 5s', which is completely ignored by both the programmatic checks and the LLM prompt. 
+5. Hallucinated Model: The script attempts to use `gemini-3.5-flash`, which is not a valid Gemini model and would crash a real API client.
