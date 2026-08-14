@@ -1,14 +1,12 @@
 rejection 1/5:
 verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
---- CRITERIA CHECK ---
-C1 (exists): True
-C2 (1280x720): True (1280x720)
-C3 (audio & video): True (Video:True Audio:True)
-C4 (~120s): True (119.97s)
-Uploading to Gemini for perception check...
-C5 (Perceptual >=7): False (API Error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-3.5-pro is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}})
+Starting verification...
+C1: True
+C2: 1280x720
+C3: Video:True Audio:True
+C4: 143.18s
+C5: Score: 8.5 - The short has excellent comedic timing, a strong hook within the first few seconds, and zero dead air. The jokes targeting internet subcultures, podcasts, and crypto are sharp and land well, wrapping up with a highly satisfying payoff at the end.
 
---- FAULT-PROOF ---
-FAULT-PROOF: Verified that verify.py catches an invalid video file.
-
+--- FAULT PROOF ---
+FAULT-PROOF: Tested 640x480 1s video with no audio. C2 caught: 640x480 | C3 caught: Video:True Audio:False | C4 caught: 1.00s
 VERDICT: FAIL
