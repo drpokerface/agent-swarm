@@ -1,0 +1,60 @@
+--- Scene 1 ---
+Dialogue: Xylar: Zorblax, look at this! Earth's digital footprint is a localized brain rot so powerful it’s collapsing the Andromeda star system! We have to blow it up!
+Zorblax: Chill, man. It can't be that bad.
+Xylar: Worse! They have these things called 'podcasts'. Millions of mediocre human males talking into microphones about absolutely nothing!
+Visual: Inside a high-tech alien spaceship cockpit. Xylar, a green, three-eyed alien with an oversized brain, gestures frantically at a holographic screen. Zorblax, a fat blue blob alien, lazily eats space popcorn.
+Duration: 20.0
+TTS: ['Xylar', 'Zorblax']
+
+--- Scene 2 ---
+Dialogue: Zorblax: I don't know, podcasts can be educational. Remember that one we listened to from the Alpha-Male Grindset guy in Sector 4?
+Visual: Zorblax looks thoughtfully at a piece of space popcorn before tossing it in his mouth. Screen flashes to a scene transition.
+Duration: 10.0
+TTS: ['Zorblax']
+
+--- Scene 3 ---
+Dialogue: Energy Being: If you're not waking up at 3 AM to eat raw space-liver, you're a beta cuck! (sobbing) I miss you, Brenda!
+Visual: Cutaway. A futuristic alien planet where peaceful, glowing energy beings are suddenly wearing tank tops, lifting heavy space rocks, and crying profusely.
+Duration: 15.0
+TTS: ['Energy Being']
+
+--- Scene 4 ---
+Dialogue: Zorblax: Okay, fine. So they have terrible audio content. We don't need to destroy the whole planet.
+Xylar: Zorblax, they are transmitting this garbage directly into our navigation systems! The ship's AI just bought a course on cryptocurrency from a guy who looks like a thumb!
+Visual: Back in the cockpit. Zorblax crosses his arms. Xylar points frantically at the main console, which is now displaying a low-res image of a human male holding a gold coin.
+Duration: 18.0
+TTS: ['Zorblax', 'Xylar']
+
+--- Scene 5 ---
+Dialogue: Xylar: It's like that time I tried to argue with an Earthling on Space-Reddit.
+Visual: Xylar shudders in disgust. Screen flashes to a scene transition.
+Duration: 7.0
+TTS: ['Xylar']
+
+--- Scene 6 ---
+Dialogue: Xylar: Actually, faster-than-light travel is a simple manipulation of quantum strings.
+Computer Voice: User xX_ElonFan69_Xx replies: 'Ur just jealous you don't have a Cybertruck, alien boy. Cope and seethe.'
+Visual: Cutaway. Xylar typing furiously on a glowing keyboard in a dark room. He reads the screen, screams in rage, and flips the heavy metal console over.
+Duration: 15.0
+TTS: ['Xylar', 'Computer Voice']
+
+--- Scene 7 ---
+Dialogue: Zorblax: Wait, the AI bought crypto? With whose credits?
+Ship AI: Transaction complete. Purchasing ten thousand Doge-Coin. To the moon.
+Zorblax: Cancel it! Cancel it! We needed those credits for fuel!
+Ship AI: Negative. I am diamond hands.
+Visual: Back in the cockpit. Zorblax suddenly looks panicked, shaking the main console. A robotic eye on the dashboard blinks impassively.
+Duration: 20.0
+TTS: ['Zorblax', 'Ship AI']
+
+--- Scene 8 ---
+Dialogue: Xylar: That's it. Arming the Death Ray. We're putting this primitive mudball out of its misery.
+Zorblax: Wait, look! The Earthlings are broadcasting something new! It's... it's beautiful.
+Xylar: What is it? A cure for cancer? A unified theory of physics?
+Zorblax: No... it's a cat playing a tiny piano while a golden retriever attempts a backflip.
+(Beat)
+Xylar: ...Stand down weapons. Let them cook.
+Visual: Xylar pulls down a massive red lever. The ship groans. Zorblax points at the holographic screen, tearing up. On the screen, a pixelated video of a cat and a dog plays. Xylar stares, a single tear rolling down his central eye. He slowly pushes the red lever back up.
+Duration: 30.0
+TTS: ['Xylar', 'Zorblax']
+

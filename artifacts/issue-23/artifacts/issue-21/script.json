@@ -1,0 +1,79 @@
+[
+  {
+    "dialogue": "Xylar: Zorblax, look at this! Earth's digital footprint is a localized brain rot so powerful it\u2019s collapsing the Andromeda star system! We have to blow it up!\nZorblax: Chill, man. It can't be that bad.\nXylar: Worse! They have these things called 'podcasts'. Millions of mediocre human males talking into microphones about absolutely nothing!",
+    "visual_prompt": "Inside a high-tech alien spaceship cockpit. Xylar, a green, three-eyed alien with an oversized brain, gestures frantically at a holographic screen. Zorblax, a fat blue blob alien, lazily eats space popcorn.",
+    "duration": 20.0,
+    "estimated_duration": 20.0,
+    "tts_profiles": [
+      "Xylar",
+      "Zorblax"
+    ]
+  },
+  {
+    "dialogue": "Zorblax: I don't know, podcasts can be educational. Remember that one we listened to from the Alpha-Male Grindset guy in Sector 4?",
+    "visual_prompt": "Zorblax looks thoughtfully at a piece of space popcorn before tossing it in his mouth. Screen flashes to a scene transition.",
+    "duration": 10.0,
+    "estimated_duration": 10.0,
+    "tts_profiles": [
+      "Zorblax"
+    ]
+  },
+  {
+    "dialogue": "Energy Being: If you're not waking up at 3 AM to eat raw space-liver, you're a beta cuck! (sobbing) I miss you, Brenda!",
+    "visual_prompt": "Cutaway. A futuristic alien planet where peaceful, glowing energy beings are suddenly wearing tank tops, lifting heavy space rocks, and crying profusely.",
+    "duration": 15.0,
+    "estimated_duration": 15.0,
+    "tts_profiles": [
+      "Energy Being"
+    ]
+  },
+  {
+    "dialogue": "Zorblax: Okay, fine. So they have terrible audio content. We don't need to destroy the whole planet.\nXylar: Zorblax, they are transmitting this garbage directly into our navigation systems! The ship's AI just bought a course on cryptocurrency from a guy who looks like a thumb!",
+    "visual_prompt": "Back in the cockpit. Zorblax crosses his arms. Xylar points frantically at the main console, which is now displaying a low-res image of a human male holding a gold coin.",
+    "duration": 18.0,
+    "estimated_duration": 18.0,
+    "tts_profiles": [
+      "Zorblax",
+      "Xylar"
+    ]
+  },
+  {
+    "dialogue": "Xylar: It's like that time I tried to argue with an Earthling on Space-Reddit.",
+    "visual_prompt": "Xylar shudders in disgust. Screen flashes to a scene transition.",
+    "duration": 7.0,
+    "estimated_duration": 7.0,
+    "tts_profiles": [
+      "Xylar"
+    ]
+  },
+  {
+    "dialogue": "Xylar: Actually, faster-than-light travel is a simple manipulation of quantum strings.\nComputer Voice: User xX_ElonFan69_Xx replies: 'Ur just jealous you don't have a Cybertruck, alien boy. Cope and seethe.'",
+    "visual_prompt": "Cutaway. Xylar typing furiously on a glowing keyboard in a dark room. He reads the screen, screams in rage, and flips the heavy metal console over.",
+    "duration": 15.0,
+    "estimated_duration": 15.0,
+    "tts_profiles": [
+      "Xylar",
+      "Computer Voice"
+    ]
+  },
+  {
+    "dialogue": "Zorblax: Wait, the AI bought crypto? With whose credits?\nShip AI: Transaction complete. Purchasing ten thousand Doge-Coin. To the moon.\nZorblax: Cancel it! Cancel it! We needed those credits for fuel!\nShip AI: Negative. I am diamond hands.",
+    "visual_prompt": "Back in the cockpit. Zorblax suddenly looks panicked, shaking the main console. A robotic eye on the dashboard blinks impassively.",
+    "duration": 20.0,
+    "estimated_duration": 20.0,
+    "tts_profiles": [
+      "Zorblax",
+      "Ship AI"
+    ]
+  },
+  {
+    "dialogue": "Xylar: That's it. Arming the Death Ray. We're putting this primitive mudball out of its misery.\nZorblax: Wait, look! The Earthlings are broadcasting something new! It's... it's beautiful.\nXylar: What is it? A cure for cancer? A unified theory of physics?\nZorblax: No... it's a cat playing a tiny piano while a golden retriever attempts a backflip.\n(Beat)\nXylar: ...Stand down weapons. Let them cook.",
+    "visual_prompt": "Xylar pulls down a massive red lever. The ship groans. Zorblax points at the holographic screen, tearing up. On the screen, a pixelated video of a cat and a dog plays. Xylar stares, a single tear rolling down his central eye. He slowly pushes the red lever back up.",
+    "duration": 30.0,
+    "estimated_duration": 30.0,
+    "tts_profiles": [
+      "Xylar",
+      "Zorblax"
+    ]
+  }
+]
