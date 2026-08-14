@@ -1,6 +1,11 @@
 rejection 1/5:
 verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-work\issue-23\workspace\verify.py", line 137
-    print("
-          ^
-SyntaxError: unterminated string literal (detected at line 137)
+FAULT-PROOF: Testing verification routine with corrupt dummy file.
+FAULT-PROOF SUCCESS: Corrupt dummy file correctly failed parse check.
+C1: PASS - final.mp4 exists
+C2: PASS - Duration is 139.547657s
+C4: PASS - AV streams present
+C3: PASS - Resolution is 1280x720
+C5: PASS - Video is non-degenerate
+C6: FAIL - Perception score 3 < 7. Reasoning: The submission is not a finished animated short. It consists of a voice-over script read over static, flat-colored backgrounds (gray and green) with written scene directions. It lacks actual character animation, visual cohesion, background music, sound effects, and active frames, rendering it an incomplete pre-production animatic or script read rather than a fully realized animation.
+VERDICT: FAIL
