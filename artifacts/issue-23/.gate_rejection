@@ -1,6 +1,9 @@
 rejection 1/5:
 verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
-  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-work\issue-23\workspace\verify.py", line 65
-    prompt = "Here is the rubric:
-             ^
-SyntaxError: unterminated string literal (detected at line 65)
+--- FAULT PROOF ---
+VALIDATED: checks correctly caught the degenerate/corrupt video.
+--- EVALUATION ---
+C1: True - Exists
+C2: True - 1280x720
+C3: True - Video:True Audio:True
+C4: False - 143.18s

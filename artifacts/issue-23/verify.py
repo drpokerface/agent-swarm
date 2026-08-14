@@ -62,9 +62,7 @@ def check_c5(target):
         with open("rubric.md", "r") as f:
             rubric = f.read()
 
-        prompt = "Here is the rubric:
-" + rubric + "
-Review this video. Is it a cohesive comedy short that scores >= 7 on the rubric? Look for distinct scenes, audio, and pacing. Reply with exactly 'YES' or 'NO', followed by a brief reason."
+        prompt = "Here is the rubric:\n" + rubric + "\nReview this video. Is it a cohesive comedy short that scores >= 7 on the rubric? Look for distinct scenes, audio, and pacing. Reply with exactly 'YES' or 'NO', followed by a brief reason."
         resp = client.models.generate_content(model="gemini-3.5-flash", contents=[prompt, video_file])
         ans = resp.text.strip()
         if ans.startswith("YES"):
