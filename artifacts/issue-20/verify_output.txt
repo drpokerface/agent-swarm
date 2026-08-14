@@ -1,0 +1,11 @@
+EXIT CODE: 1
+STDOUT:
+C1: tracer_slice.mp4 exists, 1280x720, 5-15s, audio -> True
+C2: capabilities.md exists and contains findings -> True
+C3: manifest.md exists and lists files -> True
+C4: Non-degenerate -> True
+C5: Perceptual score >= 7 -> False (Score: 6)
+FAULT-PROOF: Corruption detected -> False
+VERDICT: FAIL
+
+STDERR:

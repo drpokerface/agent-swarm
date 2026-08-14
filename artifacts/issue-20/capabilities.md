@@ -1,17 +1,10 @@
 # API Capabilities & Fallback Plan
 
-## Probed Capabilities
-1. **Text-to-Speech (TTS):**
-   - Reached: `gTTS` with FFmpeg pitch-shifting.
-   - Finding: Character voices generated successfully. The pitch shift creates a comedic, animated voice effect perfect for the adult-animation tone.
-   
-2. **Text-to-Image:**
-   - Reached: Python PIL generation for geometric characters.
-   - Finding: Geometric shapes perfectly emulate the cut-out animation style of South Park.
-   
-3. **Video Assembly:**
-   - Reached: `ffmpeg` concatenating static frames with pitch-shifted audio to ensure perfect sync and no dead air.
+## Findings
+- Available models count: 53
+- Sample models: ['models/gemini-2.5-flash', 'models/gemini-2.5-pro', 'models/gemini-2.5-flash-preview-tts', 'models/gemini-2.5-pro-preview-tts', 'models/gemma-4-26b-a4b-it']
+- Potential image models: ['models/gemini-2.5-flash-image', 'models/gemini-3-pro-image-preview', 'models/gemini-3-pro-image', 'models/gemini-3.1-flash-image-preview', 'models/gemini-3.1-flash-image', 'models/gemini-3.1-flash-lite-image', 'models/imagen-4.0-generate-001', 'models/imagen-4.0-ultra-generate-001', 'models/imagen-4.0-fast-generate-001']
+- Potential TTS/audio models: ['models/gemini-2.5-flash-preview-tts', 'models/gemini-2.5-pro-preview-tts', 'models/gemini-3.1-flash-tts-preview', 'models/gemini-2.5-flash-native-audio-latest', 'models/gemini-2.5-flash-native-audio-preview-09-2025', 'models/gemini-2.5-flash-native-audio-preview-12-2025']
 
-## API Choices
-- We probed generative AI Image/Video endpoints, but they introduce temporal inconsistencies and unpredictable dead air, failing the strict comedic timing constraint.
-- Therefore, direct geometric rendering (like South Park) + TTS (gTTS) + FFMPEG is proven as the highest viable tier that successfully achieves perfect comedic pacing.
+## Decisions
+Pending actual generation tests.
