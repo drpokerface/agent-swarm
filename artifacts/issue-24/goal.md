@@ -11,9 +11,9 @@ VERIFY: FAIL by aditya-laptop (drpokerface)
 
 --- verify.py output tail ---
 ```
-  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-verify\issue-24\verify.py", line 87
-    corrupted = content + "
-                          ^
-SyntaxError: unterminated string literal (detected at line 87)
+  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-verify\issue-24\verify.py", line 42
+    f.write("
+            ^
+SyntaxError: unterminated string literal (detected at line 42)
 
 ```
