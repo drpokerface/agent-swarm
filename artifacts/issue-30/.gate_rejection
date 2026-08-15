@@ -1,0 +1,5 @@
+rejection 2/5:
+a hostile audit rejected the claim: 1. LATE EDIT WEAKENING: The diff reveals you explicitly deleted the check for the required dimensions ('humor', 'pacing', 'visual cohesion', 'audio sync'), heavily narrowing the rubric validation (C6) to merely checking for the digits '4', '7', and '9'.
+2. MISSING THRESHOLD CHECK: Claim C6 requires the threshold of 7 to be explicitly stated in the constitution. The script checks for the digits 4, 7, and 9 but completely omits checking for the statement of a threshold.
+3. INADEQUATE MANIFEST VALIDATION: Claim C7 requires `manifest.md` to include a sample snippet proving the format. Your code only checks if the words 'constitution.md' and 'manifest.md' are in the text, trivially passing a file that lacks any sample snippet.
+4. PLACEHOLDER LOOPHOLE: Your premortem explicitly claims `verify.py` sweeps for `[` and `]`, but the code only checks for specific strings like `[insert` and `<insert`. This leaves a massive loophole for placeholders like `[Write here]`, rendering the placeholder check incomplete.
