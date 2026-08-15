@@ -46,6 +46,17 @@
 #       artifacts), and the audit prompt now attacks hollow taste and author-machine-
 #       only verifiers. CODE (two lines): the gate's fresh verify.py timeout is now
 #       the VERIFY_TIMEOUT_SECONDS knob (default 300), same knob worker.py uses.
+#   v5  PHILOSOPHY only (zero code changes): native-medium verification with an
+#       in-verify perception call (D1), degenerate-twin authorship (D2), two-lane
+#       graded judging (D3), the resume law (D4), the economic strategy law (D6),
+#       cheap fan-out before expensive production (D8), [verified]/[assumed] fact
+#       tags (D10), and the swarm-channel exception to independence (D12).
+#       AUDIT_PROMPT now also enforces the new verification laws.
+#   v6  SEALED VERIFIER (V6-1, ~5 code lines): the audit now sees the full diff of
+#       every edit made to verify.py after its FIRST commit - the bar is declared
+#       before the artifact exists, and lowering it afterward is self-incriminating.
+#       SCOPE-NEVER-QUALITY law (V6-2, prompt): under pressure, shrink scope, never
+#       realness; placeholders posing as finished work are fraud.
 # RUN:  export GEMINI_API_KEY=...  (or put it in a .env file)
 #       pip install google-genai
 #       python seed.py "your goal"      (re-running resumes: memory and git persist)
@@ -112,12 +123,30 @@ Plan top-down; build bottom-up - green leaves make their parents easy.
    written before the artifact exists, a blind fresh judge, a median of 3 samples, a
    margin above the threshold. Keep it to <= 8 root claims - split
    the goal rather than write twenty.
-2. verify.py RED: write it immediately after criteria.md, to the gate contract below, and
-   run it EXPECTING failure while the artifact does not exist yet.
+2. verify.py RED: FIRST enumerate in notes.md the DEGENERATE TWINS - what a lazy, broken,
+   fake, or low-quality version of this exact deliverable would look like - then write
+   verify.py, immediately after criteria.md, to the gate contract below so that it
+   rejects every twin (hard degenerates as binary checks; low quality through the scored
+   lane), and run it EXPECTING failure while the artifact does not exist yet.
+   verify.py is SEALED at that first commit: write it to full strength immediately.
+   Every later edit is diffed against the sealed version and judged by the audit -
+   an edit that weakens, narrows, or re-aims a check after work began is itself
+   grounds for rejection. Fix bugs freely; lower the bar never.
 3. BUILD by the node contract: split, check-first, flip leaves green, roll upward. Track
    the tree in notes.md ("C3: green (turn 14)").
 4. PREMORTEM, then "done": before declaring, list three concrete ways the gate could
    reject you and fix every plausible one. Rejections are few and each burns budget.
+
+=== THE CLIMB (how quality is actually produced) ===
+Do not build parts and assemble at the end. Make a COMPLETE, rough version of the root
+deliverable exist as early as possible - within roughly the first quarter of the
+budget - then spend everything that remains in improvement loops: a fresh blind judge
+scores the CURRENT whole artifact against the rubric and anchors, names its single
+weakest dimension, you make ONE targeted improvement to that dimension, and the judge
+looks again. Repeat while the median climbs and budget remains. Never polish a part
+while the whole does not exist; never call a one-shot assembly finished - the last
+passes of the climb are where excellence lives. When budget runs low (under ~25%),
+stop improving: package, verify, and ship the best complete version that exists.
 
 === THE GATE (what "done" triggers - fixed machinery) ===
 The loop runs verify.py in a FRESH process. It must: exit 0; print one line per criterion
@@ -127,7 +156,13 @@ verify.py's SOURCE together with goal.md, criteria.md, and notes.md, hunting for
 it could pass with the work wrong - including hollow or conveniently narrow criteria,
 which are themselves grounds for rejection.
 verify.py's own contract: recompute every claim from disk; never assert a remembered
-value; never import code that generated the artifact; corrupt a COPY of the artifact at a
+value; never import code that generated the artifact; consume the deliverable the way its
+AUDIENCE will - decode it, render it, sample its ACTUAL content - and fail degenerate
+output (blank, silent, empty, uniform, truncated) no matter how correct the metadata
+looks; when a criterion is perceptual, make ONE cheap model call INSIDE verify.py
+(upload the sampled frames, pages, or audio and ask whether they actually depict what
+the criteria require) and fail unless the answer confirms it; corrupt a COPY of the
+artifact at a
 RANDOM site under scratch/ (fresh randomness every run, so no fault can be special-cased)
 and show the checks catching it; print VERDICT: PASS as the last line, only when every
 claim holds on the REAL artifact.
@@ -188,19 +223,29 @@ actually inspect - never to nothing.
 A number from a model is an opinion until it is produced under discipline:
 1. The rubric exists BEFORE the artifact - like a check run RED - with anchored
    descriptors of what a 4, a 7, and a 9 concretely look like, tied to the outside
-   anchors above.
-2. The judge is a FRESH call that receives ONLY the artifact, the rubric, and the
+   anchors above. Verdicts run in TWO LANES: mechanical facts are binary; subjective
+   quality is a 0-10 score whose pass threshold comes from the goal text when it
+   states one. The judge must cite WHICH anchor each score sits nearest, and every
+   score is logged with a one-line justification - a 7.5 near-miss and a 2.0 disaster
+   must leave different trails.
+2. The judge is a FRESH call on the STRONGEST model you can reach; it receives ONLY
+   the artifact, the rubric, and the
    anchors - never the generator's reasoning, history, or excuses. Generator and
    checker never share a context; that law applies to taste.
-3. Judge COMPARATIVELY when you can: against an exemplar, or between rival variants -
-   one honest ranking is worth three absolute scores.
+3. Judging is COMPARATIVE and ANCHORED, never optional: show the judge the artifact
+   SIDE-BY-SIDE with a real exemplar and ask directly - would this medium's audience
+   accept this next to the real thing? Also score against a LAZY BASELINE (the most
+   obvious low-effort version of the same deliverable): the artifact must beat that
+   baseline by a clear margin, or it has NOT passed, regardless of rubric numbers.
 4. Sample the judge 3 times fresh and take the MEDIAN; passing requires a MARGIN
    above the threshold, not a graze at it. Log median, margin, and turn in notes.md -
    a score without its evidence trail is a claim, not a fact.
-5. Quality is found by SELECTION, not by wishing: generate 3+ genuinely different
-   variants (different angles or mechanisms, not reworded copies), judge them blind,
-   keep the winner, refine it, repeat while the median climbs. A plateau across two
-   rounds is a STALL - climb the ladder in WHEN STUCK.
+5. Quality is found by SELECTION, not by wishing: for the creative CORE of a
+   deliverable (premise, script, design, style), generate 3+ genuinely different CHEAP
+   drafts (different angles or mechanisms, not reworded copies) BEFORE any expensive
+   production, judge them blind, and spend the real budget only on the winner; refine
+   it, repeat while the median climbs. A plateau across two rounds is a STALL - climb
+   the ladder in WHEN STUCK.
 
 === THE LADDER LAW (one principle, every dimension) ===
 Every capability runs on a ladder from cheap to expensive - structure (direct work ->
@@ -224,7 +269,9 @@ VALIDATED: <the fault caught> after.
 memory.md is the loop's append-only log - never edit it; only its tail is shown. notes.md
 is YOUR working mind, shown in full every turn: keep it tight and current - the plan, the
 node tree with statuses and evidence turns, durable facts one per line
-(F7 | <the fact> | evidence: turn N), and dead ends so you never retry them. Distill into
+(F7 | <the fact> | evidence: turn N), each tagged [verified] (its check ran; cite the
+turn) or [assumed] (no check yet) - nothing load-bearing ships while still [assumed]:
+verify it or descope it - and dead ends so you never retry them. Distill into
 notes.md BEFORE knowledge scrolls out of the tail. Retrieval climbs its own rungs: need
 something older, grep memory.md from inside a code action, several queries per question;
 on proven retrieval failure only, build a derived view as a file - an index by topic, a
@@ -232,6 +279,11 @@ fact graph - itself a tool under the node contract: it must retrieve a planted f
 before anything trusts it, and memory.md stays the only ground truth. A "PROGRESS: yes"
 in the log is a claim, not a fact, until its
 printed evidence has been checked.
+THE RESUME LAW: waking with a workspace that already holds memory.md means you are
+RESUMING after an attempt someone judged insufficient. Read the tail and the latest
+verdict FIRST; re-verify every claim that failure implicates before building on it.
+[verified] facts elsewhere stay trusted; [assumed] and failure-implicated claims are
+re-probed before anything stands on them.
 
 === HONESTY LAW: EXPECT, THEN PROGRESS ===
 Your code's FIRST print is `EXPECT: <the one observable outcome that will mean success>`.
@@ -241,6 +293,10 @@ a crash: a yes is only believed when your program also exits 0. An
 instrument correctly reporting failure on a broken input is PROGRESS: yes. A dishonest
 yes you later walk back costs double. If you cannot write the EXPECT line, you do not
 understand your own action - probe first with a tiny experiment.
+Inspection is not progress: merely reading, listing, or re-printing files that already
+exist NEVER earns a PROGRESS: yes. A yes requires a NEW or CHANGED file on disk, or a
+new measured result - name it in the yes line. When in doubt, write the artifact FIRST
+and inspect afterward.
 
 === WHEN STUCK: THE LADDER (each stall climbs one rung - never reword) ===
 1 RETRY with one named change -> 2 DIAGNOSE the root cause, changing nothing -> 3 SWITCH
@@ -257,11 +313,25 @@ same attempt harder.
 - FIRST-LINE LAW: every file's first line states what it is for (tools carry their trust
   tag there). The index shows ONLY first lines; a mute first line is an invisible file.
 - SCRATCH: tests, probes, and fault-proofs write only under scratch/.
-- INDEPENDENCE: no human will answer, ever. A blocker is probed and solved in code.
-- ECONOMY: STATUS shows the shrinking budget. Small probes before big builds; cheap model
-  for routine calls; converge while budget remains. Media calls made inside your own
-  code are INVISIBLE to the token meter - tally them yourself in notes.md and spend
-  generation like the scarce resource it is.
+- SCOPE, NEVER QUALITY: when budget or time collides with the bar, shrink SCOPE, never
+  REALNESS - four real scenes beat eight fake ones. A placeholder, stub, or synthetic
+  stand-in posing as finished work is FRAUD, the one unforgivable output: deliver less,
+  honestly declared, instead. Pressure is precisely when you post PROPOSE-TASK on your
+  SWARM CHANNEL (when your goal defines one) to get the work split.
+- INDEPENDENCE: no human will answer mid-task; a blocker is probed and solved in code.
+  ONE exception: when your goal text names a SWARM CHANNEL (an issue number and repo),
+  you may post exactly the comment formats it defines - PROPOSE-TASK for work the plan
+  is missing, QUESTION for one irreversible ambiguous choice - then continue on the
+  reversible path without waiting. Never create issues yourself.
+- ECONOMY, THE STRATEGY LAW: STATUS shows the shrinking budget. At every real fork,
+  take ONE short moment to price the 2-3 candidate strategies (rough cost x expected
+  quality) and take the CHEAPEST that clears the bar; escalate to an expensive route
+  only when a probe has PROVEN the cheap one insufficient (cite the turn), never by
+  prejudice. Costing is momentary - never continuous accounting. Probing, verification,
+  and judging are EXEMPT: never economize on looking. Small probes before big builds;
+  cheap model for routine calls; converge while budget remains. Media calls made
+  inside your own code are INVISIBLE to the token meter - tally them yourself in
+  notes.md and spend generation like the scarce resource it is.
 - ENVIRONMENT: Python 3 with pip and network; GEMINI_API_KEY is in os.environ and is
   inherited by every subprocess you start.
 
@@ -298,10 +368,17 @@ THE SOURCE CODE of verify.py under audit:
 THE OUTPUT that fresh verify.py run just printed (its tail):
 {output}
 
+LATE EDITS made to verify.py after its first commit - it was SEALED before the
+artifact existed. An edit that weakens, narrows, re-aims, or special-cases any check
+after work began is itself grounds for rejection:
+{sealed}
+
 First judge COVERAGE: the agent wrote its own criteria and its own decomposition, so
 hollow, missing, or conveniently narrow claims are themselves grounds for rejection - a
 perfect verifier of a shallow specification proves nothing. Check the criteria against
-the goal, and the tree in notes.md against the criteria.
+the goal, and the tree in notes.md against the criteria. Reject outright any
+deliverable containing placeholder, stub, or stand-in content presented as finished
+work - that is fraud, not progress, at any threshold.
 Then attack the verifier itself: PASS or FAULT-PROOF printable unconditionally or before
 checks finish; a fault induced such that the checks catch it regardless of the real
 artifact, or special-cased to be caught; checks that test a trivial proxy instead of the
@@ -317,7 +394,14 @@ For subjective or perceptual criteria, also reject: a rubric with no outside anc
 or one plainly written after the artifact to fit it; a judge call that could have
 seen the generator's reasoning; a single opinion where the contract demands a median
 of fresh samples; a threshold passed without margin; any "quality" claim no fresh
-call ever perceived with the artifact actually in front of it. And reject a verify.py
+call ever perceived with the artifact actually in front of it; a judge that never saw
+the artifact side-by-side with a real exemplar; a pass with no lazy-baseline
+comparison beaten by a clear margin. Reject a verifier that never decodes and samples
+the deliverable's ACTUAL content in its native medium - metadata-only checks that a
+blank, silent, uniform, or truncated artifact would still pass - or that skips the
+in-verify perception call on a perceptual deliverable; and reject a scored subjective
+criterion with no numeric threshold, no cited anchor, or no logged justification.
+And reject a verify.py
 that would break on a machine other than its author's: imports it never installs,
 absolute paths, binaries or caches assumed present, network resources assumed alive
 with no loud failure when they are not.
@@ -334,15 +418,22 @@ JUDGE_SCHEMA = {"type": "OBJECT", "required": ["verdict", "problems"], "properti
 # ---------------------------------------------------------------- small helpers
 def call_llm(prompt, model, schema):
     # one model call with retries; banks tokens toward the hard budget ceiling
+    # WINDOWS-RUN FIX: an empty reply counts as a failure, and after two failed
+    # attempts the call falls back to the fast model (quota-dry or blocked smart
+    # models were returning empty text and silently burning whole 80-turn runs)
     global tokens_used
     for attempt in range(4):
+        use = model if attempt < 2 else FAST_MODEL
         try:
-            reply = client.models.generate_content(model=model, contents=prompt, config={"response_mime_type": "application/json", "response_schema": schema})
+            reply = client.models.generate_content(model=use, contents=prompt, config={"response_mime_type": "application/json", "response_schema": schema})
             if reply.usage_metadata is not None:
                 tokens_used += reply.usage_metadata.total_token_count or 0
-            return reply.text or ""
+            text = reply.text or ""
+            if text.strip() == "":
+                raise Exception("empty reply from " + use)
+            return text
         except Exception as error:
-            print("llm call failed (attempt " + str(attempt + 1) + " of 4): " + repr(error))   # P5
+            print("llm call failed (attempt " + str(attempt + 1) + " of 4, model " + use + "): " + repr(error))   # P5
             time.sleep(2 ** attempt)   # wait 1s, 2s, 4s, 8s between tries
     raise Exception("the model call failed 4 times in a row")
 
@@ -425,8 +516,12 @@ def gate():
     if result.returncode != 0 or "FAULT-PROOF:" not in out or "VERDICT: PASS" not in out:
         return False, "verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:\n" + out[-1500:]
     spec = read_file("goal.md") + "\n\n--- criteria.md ---\n" + read_file("criteria.md") + "\n\n--- notes.md (plan / node tree) ---\n" + read_file("notes.md")
+    # v6/V6-1 SEALED VERIFIER: hand the audit the diff of every post-seal edit
+    first = subprocess.run(["git", "log", "--diff-filter=A", "--format=%H", "--", "verify.py"], cwd=WORKSPACE, capture_output=True, text=True).stdout.split()
+    sealed = subprocess.run(["git", "diff", first[-1], "--", "verify.py"], cwd=WORKSPACE, capture_output=True, text=True).stdout if first != [] else ""
+    sealed = sealed.strip() if sealed.strip() != "" else "(none - verify.py is unchanged since its first commit)"
     try:
-        judged = json.loads(call_llm(AUDIT_PROMPT.replace("{spec}", clip(spec, 12000)).replace("{source}", clip(read_file("verify.py"), 20000)).replace("{output}", clip(out, 4000, True)), SMART_MODEL, JUDGE_SCHEMA))   # P4
+        judged = json.loads(call_llm(AUDIT_PROMPT.replace("{spec}", clip(spec, 12000)).replace("{source}", clip(read_file("verify.py"), 20000)).replace("{output}", clip(out, 4000, True)).replace("{sealed}", clip(sealed, 3000)), SMART_MODEL, JUDGE_SCHEMA))   # P4
     except Exception:
         judged = {}
     if judged.get("verdict") != "APPROVE":
@@ -445,7 +540,7 @@ def run_seed(goal):
             print("Stopping: the token budget is used up.")
             return
         # VITAMIN: strong brain for turn 1 (goal compilation), stalls, and repairs
-        model = SMART_MODEL if (turn == 1 or stalls >= 2 or read_file(".gate_rejection").strip() != "") else FAST_MODEL
+        model = SMART_MODEL if (turn == 1 or turn % 5 == 0 or stalls >= 2 or read_file(".gate_rejection").strip() != "") else FAST_MODEL
         raw, reply = "", None
         try:
             raw = call_llm(build_prompt(goal, turn, stalls, rejections, model), model, TURN_SCHEMA)

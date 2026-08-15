@@ -18,9 +18,17 @@
 # checks server-side what each person's token may do, and the creator==OWNER filter
 # below decides which issues workers will ever believe.
 #
+# v5: D4 workspace persistence (seed RESUMES across retries; FRESH_EVERY forces a clean
+#     start), D5 resource-aware pause (quota/billing walls free the task without burning
+#     a retry), D12 swarm-channel injection (agents may PROPOSE-TASK / QUESTION by
+#     comment; the arbiter in `owner.py --watch` reviews them).
+# v6: V6-3 consumer veto (an agent that proves its INPUT rotten posts INPUT-REJECT and
+#     the producing issue is reopened with a consumer-authored VERIFY: FAIL) and
+#     feedback injection (every retry sees the last verification failure in its goal).
+#
 # RUN:  copy .env.example to .env and fill it in, then:  python worker.py
 
-import os, sys, re, time, shutil, subprocess
+import os, sys, re, time, shutil, stat, subprocess
 from datetime import datetime, timezone
 import requests
 
@@ -28,6 +36,15 @@ API = "https://api.github.com"
 REPO = OWNER = ME = ""          # filled in main() from .env and the GitHub API
 
 # ---------------------------------------------------------------- tiny helpers
+def rmtree(path):
+    # WINDOWS-RUN FIX: git marks object files read-only, so a plain shutil.rmtree
+    # dies with PermissionError 13. Clear the bit and retry, per file.
+    def _unlock(func, p, exc):
+        os.chmod(p, stat.S_IWRITE)
+        func(p)
+    if os.path.exists(path):
+        shutil.rmtree(path, onerror=_unlock)
+
 def load_env():
     # same convenience as seed.py: read KEY=VALUE lines from .env if present
     if os.path.exists(".env"):
@@ -57,6 +74,26 @@ def comment(n, text):
 def who_am_i():
     return os.environ.get("AGENT_ID", ME) + " (" + ME + ")"
 
+def resource_pause(n, out, where):
+    # v5/D5 RESOURCE-AWARE PAUSE: a quota / billing / spend-cap wall means the WORLD is
+    # broken, not the work - free the task WITHOUT a retry-burning failure comment,
+    # then sleep out the API's own delay so the swarm stops eating its next meal.
+    low = out.lower()
+    if not any(mark in low for mark in ("resource_exhausted", "quota exceeded", "rate limit", "billing", "spending cap")):
+        return False
+    if len([c for c in comments_of(n) if c["body"].startswith("RESOURCE-WAIT")]) >= int(os.environ.get("MAX_RESOURCE_WAITS", "6")):
+        return False   # runaway guard: too many pauses on one issue - let normal retry accounting take over
+    m = re.search(r"retry.{0,24}?(\d+)\s*(?:s\b|sec)", low)
+    wait = min(int(m.group(1)) if m else int(os.environ.get("RESOURCE_SLEEP_SECONDS", "3600")), 14400)
+    comment(n, "RESOURCE-WAIT from " + who_am_i() + " during " + where + " - quota or billing wall, not a work"
+        " failure; task freed without burning a retry, worker sleeping " + str(wait) + "s.\n```\n" + out[-400:] + "\n```")
+    fresh = gh("GET", "/repos/" + REPO + "/issues/" + str(n))
+    if fresh["assignees"]:
+        gh("DELETE", "/repos/" + REPO + "/issues/" + str(n) + "/assignees", json={"assignees": [a["login"] for a in fresh["assignees"]]})
+    print("resource wall on issue #" + str(n) + " (" + where + ") - task freed, sleeping " + str(wait) + "s")
+    time.sleep(wait)
+    return True
+
 # ------------------------------------------------- reading the bulletin board
 def depends_on(body):
     # a "depends_on: [12, 13]" line in the issue body, or nothing
@@ -81,6 +118,27 @@ def deps_closed(body):
         if gh("GET", "/repos/" + REPO + "/issues/" + str(n))["state"] != "closed":
             return False
     return True
+
+def process_vetoes():
+    # v6/V6-3 CONSUMER VETO: a consumer that proved its input rotten reopens the
+    # producer - recorded as a VERIFY: FAIL, so the normal retry machinery (budget,
+    # FRESH_EVERY, feedback injection) handles everything downstream of the reopen.
+    for it in open_owner_issues():
+        cs = comments_of(it["number"])
+        handled = {c["body"].split()[1] for c in cs if c["body"].startswith("VETO-HANDLED ")}
+        for c in cs:
+            m = re.match(r"INPUT-REJECT:\s*#(\d+)\s+(\S[\s\S]*)", c["body"])
+            if m is None or str(c["id"]) in handled:
+                continue
+            up, why = m.group(1), m.group(2)[:600]
+            prior = any(k["body"].startswith("VERIFY: FAIL by consumer-veto from issue #" + str(it["number"])) for k in comments_of(int(up)))
+            if not prior:   # one reopen max per consumer-producer pair - no ping-pong
+                gh("PATCH", "/repos/" + REPO + "/issues/" + up, json={"state": "open"})
+                comment(int(up), "VERIFY: FAIL by consumer-veto from issue #" + str(it["number"]) +
+                        "\nits consumer rejected this artifact as unusable:\n" + why)
+            comment(it["number"], "VETO-HANDLED " + str(c["id"]) +
+                    ((" - reopened #" + up) if not prior else (" - #" + up + " already vetoed by this issue; not reopening twice")))
+            print("consumer veto: issue #" + str(it["number"]) + " rejected #" + up)
 
 # --------------------------------------------------------------- finding work
 def find_verification():
@@ -141,9 +199,14 @@ def do_task(it):
     print("claimed issue #" + str(n) + ": " + it["title"])
     # a fresh scratch folder OUTSIDE this clone, so seed's git never nests in ours
     work = os.path.abspath(os.path.join("..", "swarm-work", "issue-" + str(n)))
-    if os.path.exists(work):
-        shutil.rmtree(work)
-    os.makedirs(os.path.join(work, "workspace"))
+    # v5/D4 WORKSPACE PERSISTENCE: keep the workspace across retries of the same issue
+    # so seed can RESUME (memory.md + git survive); every FRESH_EVERY-th failure starts
+    # clean as an escape hatch from a poisoned state.
+    cs = comments_of(n)
+    fails = len([c for c in cs if c["body"].startswith(("VERIFY: FAIL", "PUBLISH-FAILED"))])
+    if fails % int(os.environ.get("FRESH_EVERY", "4")) == 0:
+        rmtree(work)
+    os.makedirs(os.path.join(work, "workspace"), exist_ok=True)
     # hand over declared artifact dependencies into the seed's workspace
     for p in artifacts_needed(body):
         if os.path.exists(p):
@@ -152,12 +215,28 @@ def do_task(it):
     goal = it["title"] + "\n\n" + re.sub(r"^(depends_on|artifacts_needed):.*$", "", body, flags=re.M).strip()
     if artifacts_needed(body):
         goal += "\n\nAlready provided in your working directory: " + ", ".join(artifacts_needed(body))
+    # v5/D12 SWARM CHANNEL: the one sanctioned way an agent talks upward - comments, never issues
+    goal += ("\n\nSWARM CHANNEL: you are working issue #" + str(n) + " of the GitHub repo " + REPO +
+        " (token in GITHUB_TOKEN env). If you discover work this plan is missing, you may post ONE comment on your own"
+        " issue via the API starting exactly 'PROPOSE-TASK: ' (state: title, why, which existing deliverable it"
+        " unblocks, what it produces). Facing an irreversible, genuinely ambiguous choice, you may post ONE comment"
+        " starting exactly 'QUESTION: ', then continue on the reversible path without waiting. If a PROVIDED input"
+        " artifact fails your validation (placeholder, degenerate, or broken contract), post ONE comment starting"
+        " exactly 'INPUT-REJECT: #<producing issue number> ' plus one line of evidence - the swarm will reopen that"
+        " task; then declare impossible honestly instead of building on garbage. Never create issues yourself; an"
+        " owner-side arbiter reviews and answers as an 'ARBITER re' comment on this issue.")
+    # v6/V6-3 FEEDBACK INJECTION: a retry must know why the last attempt failed
+    lastfail = [c for c in cs if c["body"].startswith("VERIFY: FAIL")]
+    if lastfail != []:
+        goal += "\n\nLAST VERIFICATION FAILURE (repair this first):\n" + lastfail[-1]["body"][:1200]
     try:
         r = subprocess.run([sys.executable, os.path.abspath("seed.py"), goal], cwd=work,
             capture_output=True, text=True, timeout=int(os.environ.get("SEED_TIMEOUT_SECONDS", "3600")))
         out = r.stdout + r.stderr
     except subprocess.TimeoutExpired:
         out = "seed.py was killed at the " + os.environ.get("SEED_TIMEOUT_SECONDS", "3600") + " second timeout"
+    if "DONE - " not in out and resource_pause(n, out, "the seed run"):
+        return   # v5/D5: starved, not failed - no RESULT, no retry burned
     if "DONE - " in out:
         status = "gate: PASSED locally"
     elif "declared the goal impossible" in out:
@@ -171,8 +250,7 @@ def publish(n, work, out, status):
     # comment is just a short manifest pointing at them
     dest = os.path.join("artifacts", "issue-" + str(n))
     src = os.path.join(work, "workspace")
-    if os.path.exists(dest):
-        shutil.rmtree(dest)
+    rmtree(dest)
     if os.path.exists(src):
         shutil.copytree(src, dest, ignore=shutil.ignore_patterns(".git", "scratch"))
     pushed = False
@@ -206,8 +284,7 @@ def do_verify(it):
     src = os.path.join("artifacts", "issue-" + str(n))
     if os.path.exists(os.path.join(src, "verify.py")):
         spot = os.path.abspath(os.path.join("..", "swarm-verify", "issue-" + str(n)))
-        if os.path.exists(spot):
-            shutil.rmtree(spot)
+        rmtree(spot)
         shutil.copytree(src, spot)
         vt = int(os.environ.get("VERIFY_TIMEOUT_SECONDS", "300"))   # v3: same knob the gate uses
         try:
@@ -218,6 +295,8 @@ def do_verify(it):
     else:
         out, code = "no verify.py found in " + src, 1
     good = code == 0 and "FAULT-PROOF:" in out and "VERDICT: PASS" in out
+    if not good and resource_pause(n, out, "verification"):
+        return   # v5/D5: the verifier hit a quota wall (e.g. its perception call) - retry later, burn nothing
     comment(n, ("VERIFY: PASS by " if good else "VERIFY: FAIL by ") + who_am_i() +
         "\n\n--- verify.py output tail ---\n```\n" + out[-1200:] + "\n```")
     if good:
@@ -244,6 +323,7 @@ def main():
     while True:
         try:
             git("pull", "--rebase")
+            process_vetoes()   # v6/V6-3: consumer vetoes reopen rotten producers first
             waiting = find_verification()
             if waiting is not None:
                 do_verify(waiting)
