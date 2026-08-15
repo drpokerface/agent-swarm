@@ -1,0 +1,11 @@
+rejection 1/5:
+verify.py must exist, exit 0, print FAULT-PROOF: <evidence>, and end with VERDICT: PASS. Its output was:
+EXPECT: verify.py executes C1-C5 checks and confirms validity
+FAULT-PROOF: Successfully caught induced C1/C3 fault! Result: {'C1': False, 'C2': False, 'C3': False, 'C4': False, 'C5': False}
+C1: True
+C2: False
+C3: True
+C4: False
+C5: False
+Details: C2 Failed: imageio error maximum recursion depth exceeded while calling a Python object; Perceptual checks skipped: API key or mechanical preconditions missing
+VERDICT: FAIL

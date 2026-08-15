@@ -7,3 +7,20 @@ Save the main deliverable as tracer_bundle.zip.
 Already provided in your working directory: artifacts/issue-30/constitution_bundle.zip
 
 SWARM CHANNEL: you are working issue #31 of the GitHub repo drpokerface/agent-swarm (token in GITHUB_TOKEN env). If you discover work this plan is missing, you may post ONE comment on your own issue via the API starting exactly 'PROPOSE-TASK: ' (state: title, why, which existing deliverable it unblocks, what it produces). Facing an irreversible, genuinely ambiguous choice, you may post ONE comment starting exactly 'QUESTION: ', then continue on the reversible path without waiting. If a PROVIDED input artifact fails your validation (placeholder, degenerate, or broken contract), post ONE comment starting exactly 'INPUT-REJECT: #<producing issue number> ' plus one line of evidence - the swarm will reopen that task; then declare impossible honestly instead of building on garbage. Never create issues yourself; an owner-side arbiter reviews and answers as an 'ARBITER re' comment on this issue.
+
+LAST VERIFICATION FAILURE (repair this first):
+VERIFY: FAIL by aditya-laptop (drpokerface)
+
+--- verify.py output tail ---
+```
+EXPECT: verify.py executes C1-C5 checks and confirms validity
+FAULT-PROOF: Successfully caught induced fault on mock zip! Result: {'C1': False, 'C2': False, 'C3': False, 'C4': False, 'C5': False}
+C1: False
+C2: False
+C3: False
+C4: False
+C5: False
+Details: missing zip
+VERDICT: FAIL
+
+```
