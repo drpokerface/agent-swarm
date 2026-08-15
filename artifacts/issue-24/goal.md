@@ -5,3 +5,15 @@ SHARED SPEC: Adult animated comedy short (Family Guy/South Park style). Irrevere
 Save the main deliverable as constitution.md.
 
 SWARM CHANNEL: you are working issue #24 of the GitHub repo drpokerface/agent-swarm (token in GITHUB_TOKEN env). If you discover work this plan is missing, you may post ONE comment on your own issue via the API starting exactly 'PROPOSE-TASK: ' (state: title, why, which existing deliverable it unblocks, what it produces). Facing an irreversible, genuinely ambiguous choice, you may post ONE comment starting exactly 'QUESTION: ', then continue on the reversible path without waiting. If a PROVIDED input artifact fails your validation (placeholder, degenerate, or broken contract), post ONE comment starting exactly 'INPUT-REJECT: #<producing issue number> ' plus one line of evidence - the swarm will reopen that task; then declare impossible honestly instead of building on garbage. Never create issues yourself; an owner-side arbiter reviews and answers as an 'ARBITER re' comment on this issue.
+
+LAST VERIFICATION FAILURE (repair this first):
+VERIFY: FAIL by aditya-laptop (drpokerface)
+
+--- verify.py output tail ---
+```
+  File "C:\Users\Aditya\Claude\Projects\hobby\swarm-verify\issue-24\verify.py", line 87
+    corrupted = content + "
+                          ^
+SyntaxError: unterminated string literal (detected at line 87)
+
+```

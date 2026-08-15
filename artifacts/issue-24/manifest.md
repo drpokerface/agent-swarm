@@ -1,6 +1,11 @@
 # Artifact Manifest
 
-- **constitution.md**: Markdown format. Contains the goal constitution.
-  - Sample: `# Goal Constitution: Adult Animated Comedy Short`
-- **verify.py**: Python 3 script.
-  - Sample: `import os`
+- **constitution.md**: Markdown file. The Goal Constitution.
+- **verify.py**: Python 3 verification script.
+
+Tiny sample of constitution.md:
+```markdown
+# Goal Constitution: Adult Animated Comedy Short
+
+## Strategy
+```

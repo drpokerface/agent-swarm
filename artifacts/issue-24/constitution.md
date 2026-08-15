@@ -1,33 +1,31 @@
 # Goal Constitution: Adult Animated Comedy Short
 
 ## Strategy
-Our core strategy is to deliver relentless pacing and irreverent, satirical observations that hold a mirror up to modern society. We construct a tight, punchy narrative that hooks the viewer instantly. Humor stems from subverted expectations, sharp societal critiques, and unapologetic absurdity, drawing inspiration from the rapid-fire cutaways of Family Guy and the topical, unvarnished satire of South Park.
+Our goal is an adult animated comedy short (Family Guy / South Park style). Focus on irreverent, satirical, and punchy dialogue. The pacing must be fast with no dead air. The hook must occur in the first 5 seconds, followed by a strong punchline payoff at the end. Cutaway gags are encouraged for pacing and comedic density.
 
 ## Style Decisions
-* Format: MP4 video, 1280x720 resolution.
-* Tone: Irreverent, satirical, bold, punchy dialogue.
-* Structure: Hook in the first 5 seconds. Tightly synced dialogue. Fast pacing. Cutaway gags for rapid juxtaposition. Strong punchline payoff at the climax. No dead air.
+- **Video:** MP4 format, exactly 1280x720 resolution.
+- **Audio:** Perfectly synced dialogue with clear mixing.
+- **Animation:** Expressive mouth movements and distinct character designs.
+- **Tone:** Unapologetic, boundary-pushing, but structurally sound comedy.
 
 ## Conventions
-* Scripts must strictly format cutaway gags clearly to separate them from A-plot action.
-* Audio perfectly synced with no noticeable latency between lip flaps and dialogue.
-* Maintain a consistent visual aesthetic; character sheets and color palettes must be adhered to strictly.
-* Artifact Delivery Requirement: Every task shipping an artifact must also ship manifest.md documenting exact filenames, formats, and a tiny sample proving the format.
+- **Manifest Requirement:** EVERY task shipping an artifact MUST also ship a `manifest.md` documenting exact filenames, formats, and a tiny sample proving the format.
 
-## Subjective Quality Rubric (0-10 Scale)
-Pass Threshold: 7
+## Evaluation Rubric (Pass Threshold: 7)
+Score 0-10 based on comedic timing, visual consistency, and pacing.
 
-### Comedic Timing
-* 9 (Excellent): Relentless rhythm. Punchlines land exactly when intended. Cutaway gags execute with split-second precision, similar to classic Family Guy. Zero dead air.
-* 7 (Passing): Good timing, mostly snappy. Minor lags between beats, but overall rhythm keeps the viewer engaged and laughing.
-* 4 (Failing): Sluggish pacing. Dead air between dialogue beats. Telegraphed punchlines that ruin the joke.
+### Score 4 (Fail)
+- **Comedic Timing:** Dead air between lines. Jokes are over-explained.
+- **Visual Consistency:** Character proportions fluctuate wildly. Lip sync is noticeably off, breaking immersion. (Anchor: Low-quality Newgrounds early 2000s flash animation).
+- **Pacing:** Sluggish. Hook takes >10s. Cutaway gags drag on and ruin momentum.
 
-### Visual Consistency
-* 9 (Excellent): Distinctive and uniform art style throughout. Expressions are clear and read instantly.
-* 7 (Passing): Generally consistent, minor off-model moments that do not distract.
-* 4 (Failing): Jumbled styles, frequent off-model frames.
+### Score 7 (Pass Threshold)
+- **Comedic Timing:** Snappy delivery. 5-second hook lands. Clear punchline payoffs, though some minor secondary jokes may miss.
+- **Visual Consistency:** Distinct art style maintained (Anchor: South Park early seasons). Lip sync is mostly accurate.
+- **Pacing:** Fast-paced with no noticeable dead air. Cutaways are punchy and do not overstay their welcome.
 
-### Pacing
-* 9 (Excellent): No dead air, hook in first 5s.
-* 7 (Passing): Good hook, slight drag in the middle.
-* 4 (Failing): Boring start, long pauses.
+### Score 9 (Excellent)
+- **Comedic Timing:** Razor-sharp dialogue. Laugh-a-minute density. (Anchor: Family Guy peak seasons).
+- **Visual Consistency:** High-quality character rigs. Flawless lip sync and expressive acting.
+- **Pacing:** Perfect flow. The hook is immediate, and the payoff is highly satisfying without any drag.
