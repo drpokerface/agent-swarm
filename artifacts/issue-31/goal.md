@@ -14,13 +14,13 @@ VERIFY: FAIL by aditya-laptop (drpokerface)
 --- verify.py output tail ---
 ```
 EXPECT: verify.py executes C1-C5 checks and confirms validity
-FAULT-PROOF: Successfully caught induced fault on mock zip! Result: {'C1': False, 'C2': False, 'C3': False, 'C4': False, 'C5': False}
-C1: False
+FAULT-PROOF: Successfully caught induced C1/C3 fault! Result: {'C1': False, 'C2': False, 'C3': False, 'C4': False, 'C5': False}
+C1: True
 C2: False
-C3: False
+C3: True
 C4: False
 C5: False
-Details: missing zip
+Details: C2 Failed: imageio error maximum recursion depth exceeded while calling a Python object; Perceptual checks skipped: API key or mechanical preconditions missing
 VERDICT: FAIL
 
 ```
